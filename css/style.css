@@ -293,10 +293,12 @@ nav ul li a:hover {
 
 .center-content h1 {
     margin-bottom: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
     text-shadow: 1px 1px #000000;
     color: #fff;
-    white-space: nowrap;
-    font-size: 4em;
+    /* white-space: nowrap; */
+    font-size: large;
     transition: all 400ms ease;
 }
 
