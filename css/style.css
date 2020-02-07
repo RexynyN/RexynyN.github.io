@@ -297,8 +297,7 @@ nav ul li a:hover {
     margin-right: 5px;
     text-shadow: 1px 1px #000000;
     color: #fff;
-    /* white-space: nowrap; */
-    font-size: large;
+    font-size: 4em;
     transition: all 400ms ease;
 }
 
