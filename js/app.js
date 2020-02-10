@@ -4,6 +4,7 @@ var urls = [];
 //Suppor variable to handle the files
 var files = "";
 
+var grid;
 
 // ****HTML elements gathering****
 
@@ -49,8 +50,29 @@ var quantoS = document.getElementById("quantoSwitch");
 //Ready banner element
 var pronto = document.getElementById("pronto");
 
-//Image Container
-var container = document.getElementById('container');
+//Hidden Image Container
+var hiddenContainer = document.getElementById('container');
+
+//Image Organizer 
+var container = document.getElementById('imgOrganizer');
+
+//Passo 1 div
+var passo1 = document.getElementById("passo1");
+
+//Passo 2 txt
+var passo2 = document.getElementById("passo2");
+
+//Alphabetical order
+var alpha = document.getElementById("alpha");
+
+//Modal 
+var btnModal = document.getElementById("btnModal");
+
+//Random button
+var btnRandom = document.getElementById("random");
+
+//File Input tag
+var imgInput = document.getElementById('imgs');
 
 // ****Event Listeners****
 
@@ -59,71 +81,14 @@ dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', setFilesDrag, false);
 
 //File Input
-document.getElementById('imgs').addEventListener('change', setFilesInput, false);
+imgInput.addEventListener('change', setFilesInput, false);
 
-// ****Event Functions****
 
-// When the user clicks on <span> (x), close the configuration modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
+// ****Functions****
 
-// When the user clicks on <span> (x), close the confirmation modal
-span2.onclick = function() {
-    modal2.style.display = "none";
-}
 
-//Changes de Sheet Size information with the selected value
-sizeSheet.onchange = function() {
-    var sheet = getSheetSize(sizeSheet.value);
-    document.getElementById("labelFormat").innerHTML = "Você selecionou o formato " + sizeSheet.value.toUpperCase();
-    document.getElementById("labelWidth").innerHTML = "Largura do Formato: " + sheet.width + "mm";
-    document.getElementById("labelHeight").innerHTML = "Altura do Formato: " + sheet.height + "mm";
-}
 
-//
-check.onchange = function() {
-    if (!check.checked) {
-        divDim.style.display = "block";
-    } else {
-        divDim.style.display = "none";
-    }
-}
-
-// When the user clicks anywhere outside of the modals, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-
-    if (event.target == modal2) {
-        modal2.style.display = "none"
-    }
-}
-
-function fecharModal() {
-    modal2.style.display = "none";
-}
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-    if (files == "") {
-        alert("Nenhuma imagem encontrada!");
-    } else {
-        modal.style.display = "block";
-    }
-}
-
-btnCancel.onclick = function() {
-    urls = new Array;
-    modal.style.display = "none";
-    quanto.innerHTML = " ";
-    dropS.style.display = "block";
-    quantoS.style.display = "none";
-    pronto.hidden = true;
-    btn.hidden = true;
-    btnCancel.hidden = true;
-}
+// ****1st Step: File Reading****
 
 function setFilesInput(evt) {
     files = evt.target.files;
@@ -150,7 +115,6 @@ function handleDragOver(evt) {
 function handleFileSelect() {
     dropS.style.display = "none";
     quantoS.style.display = "block";
-    //files = evt.target.files;
 
     var count = 1;
     if (FileReader && files && files.length) {
@@ -169,16 +133,18 @@ function handleFileSelect() {
                     var link = e.target.result;
                     pic.src = link;
                     pic.setAttribute("id", theFile.name);
-                    container.appendChild(pic);
+                    hiddenContainer.appendChild(pic);
 
                     var objImg = {
                         link: link,
                         file: theFile.name,
-                        width: pic.width,
-                        height: pic.height
+                        width: 0,
+                        height: 0,
+                        stance: ""
                     }
+
                     urls.push(objImg);
-                    //console.log(objImg.height + " x " + objImg.width + " " + objImg.file);
+
                     if (files.length > 1)
                         quanto.innerHTML = count + "/" + files.length + " Imagens carregadas";
                     else
@@ -199,9 +165,155 @@ function handleFileSelect() {
 }
 
 
+btn.onclick = function() {
+    if (files == "") {
+        alert("Nenhuma imagem encontrada!");
+    } else {
+        passo1.hidden = true;
+        container.hidden = false;
+        passo2.style.display = "block";
+        setImgs();
+        getMeasure();
+        removeHiddenContainer();
+        grid = new Muuri(container, {
+            dragEnabled: true,
+            items: createImgOrganizer()
+        });
+    }
+}
 
-//Criador de PDF
-function createPDF() {
+btnCancel.onclick = function() {
+    location.reload();
+}
+
+function setImgs() {
+    for (var x = 0; x < urls.length; x++) {
+        var pic = document.getElementById(urls[x].file);
+        urls[x].width = pic.width;
+        urls[x].height = pic.height;
+        console.log(pic.height + " x " + pic.width);
+    }
+}
+
+function getMeasure() {
+    for (var x = 0; x < urls.length; x++) {
+        if (urls[x].width > urls[x].height)
+            urls[x].stance = "l";
+        else
+            urls[x].stance = "p";
+    }
+}
+
+function removeHiddenContainer() {
+    hiddenContainer.remove();
+    hiddenContainer = document.createElement("div");
+    hiddenContainer.id = "container";
+    document.getElementsByTagName("body")[0].appendChild(hiddenContainer);
+}
+
+
+
+// ****2nd Step:Image Organization****
+
+function createImgOrganizer() {
+    var divs = [];
+    console.log("Criando Grid de Imagens...");
+
+    for (var x = 0; x < urls.length; x++) {
+        var div1 = document.createElement("DIV");
+        div1.setAttribute("class", "item");
+
+        var div2 = document.createElement("DIV");
+        div2.setAttribute("class", "item-content");
+
+
+        var pic = document.createElement('IMG');
+        pic.src = urls[x].link;
+        pic.setAttribute("id", urls[x].file);
+        pic.setAttribute("name", "pics");
+        pic.setAttribute("stance", urls[x].stance);
+
+        div2.appendChild(pic);
+        div1.appendChild(div2);
+        divs.push(div1);
+    }
+    return divs;
+}
+
+//Alphabetical order
+alpha.onclick = function() {
+    console.log("Ordenando...");
+    grid.destroy(true);
+    urls.sort(naturalCompare);
+    grid = new Muuri(container, {
+        dragEnabled: true,
+        items: createImgOrganizer()
+    });
+}
+
+//Random order
+random.onclick = function() {
+    console.log("Randomizando...");
+    grid.destroy(true);
+    shuffleArray(urls);
+    grid = new Muuri(container, {
+        dragEnabled: true,
+        items: createImgOrganizer()
+    });
+}
+
+
+
+// ****3rd Step: PDF configuration****
+
+//Open modal
+btnModal.onclick = function() {
+    grid.synchronize();
+    var pics = document.getElementsByName("pics");
+
+    for (var x = 0; x < pics.length; x++) {
+        urls[x].link = pics[x].src;
+        urls[x].stance = pics[x].getAttribute("stance");
+    }
+    modal.style.display = "block";
+}
+
+//Close modal from (x) button
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+
+//Dimension block of modal confirmation
+check.onchange = function() {
+    if (!check.checked) {
+        divDim.style.display = "block";
+    } else {
+        divDim.style.display = "none";
+    }
+}
+
+//Changes de Sheet Size information with the selected value
+sizeSheet.onchange = function() {
+    var sheet = getSheetSize(sizeSheet.value);
+    document.getElementById("labelFormat").innerHTML = "Você selecionou o formato " + sizeSheet.value.toUpperCase();
+    document.getElementById("labelWidth").innerHTML = "Largura do Formato: " + sheet.width + "mm";
+    document.getElementById("labelHeight").innerHTML = "Altura do Formato: " + sheet.height + "mm";
+}
+
+// When the user clicks anywhere outside of the modals, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+
+    if (event.target == modal2) {
+        location.reload();
+    }
+}
+
+//PDF creator
+function createPDF(printable) {
     var orientation = document.getElementById("orientationPDF").value;
     var format = sizeSheet.value;
     var doc;
@@ -225,22 +337,16 @@ function createPDF() {
         heightM = Number.parseFloat(document.getElementById("heightMM").value);
     }
 
-    console.log(marginL + " " + marginU + " " + widthM + " " + heightM + " ")
-
-    getMeasure();
-
-    if (document.getElementById("check1").checked) {
-        urls.sort(naturalCompare);
-    }
+    console.log(marginL + " " + marginU + " " + widthM + " " + heightM + " ");
 
     for (var x = 0; x < urls.length; x++) {
-        console.log(urls[x].file + "  " + urls[x].width + " x " + urls[x].height);
+        console.log(urls[x].file + "  " + urls[x].stance);
     }
 
     switch (orientation) {
         case "auto":
             if (all.checked) {
-                if (urls[0].width > urls[0].height)
+                if (urls[0].stance == "l")
                     doc = new jsPDF("landscape", "mm", format);
                 else
                     doc = new jsPDF("portrait", "mm", format);
@@ -250,7 +356,7 @@ function createPDF() {
                 if (urls[i].link != null && urls[i].link != "" && urls[i].link != undefined) {
                     if (!all.checked) {
                         var dec;
-                        if (urls[i].width > urls[i].height) {
+                        if (urls[i].stance == "l") {
                             dec = new jsPDF("landscape", "mm", format);
                             dec.addImage(urls[i].link, 'PNG', marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
                             dec.save(document.getElementById('namePDF').value + " - " + (i + 1) + '.pdf');
@@ -261,7 +367,7 @@ function createPDF() {
                         }
 
                     } else {
-                        if (urls[i].width > urls[i].height) {
+                        if (urls[i].stance == "l") {
                             if (i == 0)
                                 doc.addImage(urls[0].link, 'PNG', marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
                             else {
@@ -311,23 +417,35 @@ function createPDF() {
             break;
     }
 
-    if (all.checked)
+    if (all.checked) {
+        console.log("Salvando PDF...")
         doc.save(document.getElementById('namePDF').value + '.pdf');
-
-    for (var t = 0; t < urls.length; t++) {
-        document.getElementById(urls[t].file).remove();
     }
-    urls = new Array;
-    modal.style.display = "none";
     modal2.style.display = "block";
-    quanto.innerHTML = " ";
-    dropS.style.display = "block";
-    quantoS.style.display = "none";
-    pronto.hidden = true;
-    btn.hidden = true;
-    btnCancel.hidden = true;
+    modal.style.display = "none";
 }
 
+
+
+// ****4th Step: Confirmation****
+
+// When the user clicks on <span> (x), close the configuration modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks on <span> (x), close the confirmation modal
+span2.onclick = function() {
+    location.reload();
+}
+
+function fecharModal() {
+    location.reload();
+}
+
+
+
+// ****Support Functions****
 
 //Sort do Array de URLS
 var chunkRgx = /(_+)|([0-9]+)|([^0-9_]+)/g;
@@ -355,16 +473,17 @@ function naturalCompare(a, b) {
     return ax.length - bx.length;
 }
 
-function getMeasure() {
-    for (var o = 0; o < urls.length; o++) {
-        var pic = document.getElementById(urls[o].file);
-        urls[o].width = pic.width;
-        urls[o].height = pic.height;
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 }
 
-function getSheetSize(sheet) {
 
+function getSheetSize(sheet) {
     switch (sheet) {
         case "a0":
             return { width: 841, height: 1189 };
