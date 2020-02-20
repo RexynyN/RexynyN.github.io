@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Breno Nogueira" />
+    <meta name="keywords" content="imagem para pdf, image to pdf, imagem pdf, image pdf, jpg to pdf, jpg para pdf, jpg pdf, png para pdf, png pdf, png to pdf, pdf creator, criador pdf, conversor pdf, pdf converter" />
+    <meta name="description" content="Conversor de imagens para PDF online" />
+    <title>Kurumi!</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Página de estilo CSS-->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Página de Estilo Modal-->
+    <link rel="stylesheet" href="css/modal.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <style>
+        .canvas {
+            border: solid 1px #000000;
+            width: 1000px;
+            height: 1000px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Home Page -->
+    <div class="landing-page">
+        <header>
+            <a href="index.html" class="logo">Kurumi</a>
+            <div class="menu-toggle"></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <!-- outros links sem utilidade -->
+                    <li><a href="img-pdf.html">Imagens para PDF</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a href="#">Geradores/Validadores</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a href="#">Conversores</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a href="#">Calculadoras</a></li>
+                    <li><a href="#">Ferramentas</a></li>
+                </ul>
+            </nav>
+            <div class="clearfix"></div>
+        </header>
+        <div class="center-container1">
+            <div class="center-container2">
+                <div class="center-content">
+                    <h1 id="yes">Bem-Vindo ao Kurumi!</h1>
+                    <h2>Seu site de ferramentas diversas. Online e Gratuito.</h2>
+                </div>
+            </div>
+        </div>
+        <!--Aqui vai ter um tutorial de como usar-->
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+        <div class="wave wave4"></div>
+    </div>
+
+    <!-- Main -->
+    <div class="scroll-arrival"></div>
+    <main>
+
+        <input id="formula" type="text" required>
+        <button onclick="bunda();">Vai</button>
+        <div id="graph" style="width: 100%; height: 100%    ;">
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <svg style="margin-top:-8vh;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1440 319">
+            <path fill="#00b7ff" fill-opacity="1"
+                d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,218.7C672,213,768,139,864,138.7C960,139,1056,213,1152,240C1248,267,1344,245,1392,234.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+        </svg>
+        <div class="footer-aux1"></div>
+        <div class="footer-aux2"></div>
+        <div class="footer-content">
+            <p><span class="negrito">Colaboradores:</span> Breno S. Nogueira (RexynyN), Gustavo Bauer N. e Miguel S. Aguena
+            </p>
+            <p><span class="negrito">Última atualização:</span> 20/02/2020</p>
+        </div>
+    </footer>
+
+    <!-- JIM CARREY-->
+    <script src="js/jquery-3.4.1.js"></script>
+    <!-- JSPDF -->
+    <script src="js/libraries/plotta.min.js"></script>
+    <!-- MENU HAMBURGAO -->
+    <script src="js/home.js"></script>
+    <script src="js/libraries/math.min.js"></script>
+    <script src="js/graphic-calculator.js"></script>
+    <script src="js/libraries/plotly.min.js"></script>
+</body>
+
+</html>

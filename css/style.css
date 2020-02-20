@@ -128,6 +128,11 @@ q {
     quotes: none;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -298,6 +303,16 @@ nav ul li a:hover {
     text-shadow: 1px 1px #000000;
     color: #fff;
     font-size: 4em;
+    transition: all 400ms ease;
+}
+
+.center-content h2 {
+    margin-bottom: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-shadow: 1px 1px #000000;
+    color: #fff;
+    font-size: 1.7em;
     transition: all 400ms ease;
 }
 
@@ -602,82 +617,6 @@ main p {
 }
 
 
-/* Filepond Style */
-
-
-/* Limiting the height of FilePond */
-
-.filepond--root {
-    max-height: 800px;
-    max-width: 900px;
-    margin: 0 auto;
-    font-size: 1.2em;
-}
-
-
-/* underline color for "Browse" button */
-
-.filepond--label-action {
-    text-decoration-color: #aaa;
-    font-weight: bold;
-}
-
-
-/* the background color of the filepond drop area */
-
-.filepond--panel-root {
-    background-color: #eee;
-}
-
-
-/* the background color of the drop circle */
-
-.filepond--drip-blob {
-    background-color: #999;
-}
-
-
-/* the background color of the black action buttons */
-
-.filepond--file-action-button {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-
-/* the icon color of the black action buttons */
-
-.filepond--file-action-button {
-    color: white;
-}
-
-
-/* the color of the focus ring */
-
-.filepond--file-action-button:hover,
-.filepond--file-action-button:focus {
-    box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.9);
-}
-
-
-/* the text color of the file status and info labels */
-
-.filepond--file {
-    color: white;
-}
-
-
-/* error state color */
-
-[data-filepond-item-state*='error'] .filepond--item-panel,
-[data-filepond-item-state*='invalid'] .filepond--item-panel {
-    background-color: red;
-}
-
-[data-filepond-item-state='processing-complete'] .filepond--item-panel {
-    background-color: green;
-}
-
-
 /* Footer */
 
 .footer-aux1 {
@@ -709,165 +648,6 @@ footer p {
 
 .negrito {
     font-weight: bold;
-}
-
-
-/* The Modal (background) */
-
-.modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 2000;
-    /* Sit on top */
-    padding-top: 100px;
-    /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-    top: 50%;
-    transform: translateY(-50%);
-    overflow-x: auto;
-}
-
-
-/* Modal Content */
-
-.modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    width: 70%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
-}
-
-
-/* Add Animation */
-
-@-webkit-keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
-
-@keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
-    to {
-        top: 0;
-        opacity: 1
-    }
-}
-
-
-/* The Close Button */
-
-.close {
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-header {
-    padding: 2px 16px;
-    background-color: #00b7ff;
-    color: white;
-}
-
-.modal-header h2 {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-.modal-body {
-    padding: 4px 20px 25px 20px;
-}
-
-.modal-body label {
-    width: 100%;
-}
-
-.modal-body p,
-.modal-body span {
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: 1em;
-    margin: 1em 0 10px 0;
-    line-height: 1;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-    margin: 8px auto;
-    min-width: 250px;
-}
-
-.dropdown .dropdown-info {
-    color: #00B7FF;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    padding: 12px 16px;
-    z-index: 1;
-    overflow-x: auto;
-    max-height: 180px;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.modal-body input[type=text],
-.modal-body select {
-    width: 100%;
-    padding: 12px 20px;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
 }
 
 input[type=checkbox]+label {
@@ -936,20 +716,6 @@ input[type=checkbox]:checked:disabled+label:before {
     color: #00b7ff;
 }
 
-
-/* .drop-zone {
-    border: 5px solid blue;
-    width: 200px;
-    height: 100px;
-    margin: 0;
-    padding: 0;
-    font-size: 100%;
-    font: inherit;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    vertical-align: baseline;
-     text-align: center;
-} */
-
 .custom-file-input::-webkit-file-upload-button {
     visibility: hidden;
 }
@@ -1014,7 +780,7 @@ input[type="file"] {
 }
 
 .quanto-text {
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bolder;
 }
 
@@ -1077,4 +843,52 @@ input[type="file"] {
 
 .item.muuri-item-releasing .item-content {
     background: #152c43;
+}
+
+iframe {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    /* padding-left: 20px;
+    padding-right: 20px; */
+    align-items: center;
+    align-content: center;
+}
+
+
+/* Loading animation*/
+
+.sbl-circ-dual {
+    height: 48px;
+    width: 48px;
+    color: #3f86ed;
+    display: inline-block;
+    position: relative;
+    border: 5px solid;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: rotate 1s linear infinite;
+}
+
+.sbl-circ-dual::after {
+    content: '';
+    height: 40%;
+    width: 40%;
+    display: block;
+    color: inherit;
+    margin: 10px auto;
+    position: relative;
+    border: 5px solid;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: rotate .5s linear infinite reverse;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
