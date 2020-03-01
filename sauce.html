@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Breno Nogueira" />
+    <meta name="keywords"
+        content="imagem para pdf, image to pdf, imagem pdf, image pdf, jpg to pdf, jpg para pdf, jpg pdf, png para pdf, png pdf, png to pdf, pdf creator, criador pdf, conversor pdf, pdf converter" />
+    <meta name="description" content="Conversor de imagens para PDF online" />
+    <title>Kurumi!</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Página de estilo CSS-->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Página de Estilo Modal-->
+    <link rel="stylesheet" href="css/modal.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+</head>
+
+<body>
+    <!-- Home Page -->
+    <div class="landing-page">
+        <header>
+            <a href="index.html" class="logo">Kurumi</a>
+            <div class="menu-toggle"></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <!-- outros links sem utilidade -->
+                    <li><a href="img-pdf.html">Imagens para PDF</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a
+                            href="#">Geradores/Validadores</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a
+                            href="#">Conversores</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a
+                            href="#">Calculadoras</a></li>
+                    <li><a href="#">Ferramentas</a></li>
+                </ul>
+            </nav>
+            <div class="clearfix"></div>
+        </header>
+        <div class="center-container1">
+            <div class="center-container2">
+                <div class="center-content">
+                    <h1>Bem-Vindo ao Kurumi!</h1>
+                    <h2>Seu site de ferramentas diversas. Online e Gratuito.</h2>
+                </div>
+            </div>
+        </div>
+        <!--Aqui vai ter um tutorial de como usar-->
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+        <div class="wave wave4"></div>
+    </div>
+
+    <!-- Main -->
+    <div class="scroll-arrival"></div>
+    <main>
+        <h2>Gimme the Sauce!</h2>
+        <p># of Digits</p>
+        <select id="n">
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+        </select>
+        <br><br>
+        <p>Maximum number:</p>
+        <input type="number" id="max">
+        <br><br>
+        <button onclick="sauceGenerator()" class="next">Gimme the Sauce!</button>
+        <br><br>
+        <a id="sauce" target="_blank" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><button class="next" id="sauceB">Your Sauce Here</button></a>
+        <br><br>
+        <p>Now just click to get the sauce!</p>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <svg style="margin-top:-8vh;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1440 319">
+            <path fill="#00b7ff" fill-opacity="1"
+                d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,218.7C672,213,768,139,864,138.7C960,139,1056,213,1152,240C1248,267,1344,245,1392,234.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+        </svg>
+        <div class="footer-aux1"></div>
+        <div class="footer-aux2"></div>
+        <div class="footer-content">
+        </div>
+    </footer>
+
+    <!-- MENU HAMBURGAO -->
+    <script type="text/javascript" src="js/home.js"></script>
+    <script>
+        var sauce;
+        function sauceGenerator() {
+            var n = Number(document.getElementById("n").value);
+            var max = Number(document.getElementById("max").value);
+            if(max < 10000 )
+                max = 1000000
+            var number = max + 1;
+            while(number > max || number < 10000){
+            number = Math.floor(Math.random() * Math.pow(10, n));
+            }
+            sauce = 'https://nhentai.net/g/' + number;  
+            document.getElementById("sauce").href = sauce;
+            document.getElementById("sauceB").innerText = number;
+        }
+    </script>
+</body>
+
+</html>
+
