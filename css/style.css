@@ -229,7 +229,7 @@ nav ul li a:hover {
     }
 }
 
-@media (max-width:798px) {
+@media (max-width:1220px) {
     .menu-toggle {
         display: block;
         width: 40px;
@@ -891,4 +891,9 @@ iframe {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.error-text {
+    color: red;
+    font-size: x-large;
 }

@@ -77,81 +77,29 @@ function createGraph(exp) {
     });
 }
 
-Math.cos
 
 
 function addFunction() {
-    let form = document.getElementById("formula").value;
-    var exp = x => eval(form);
-    if (plotta == "") {
-        createGraph(exp);
-    } else {
-        plotta.AddLine({
-            id: form,
-            type: 'func',
-            legend: form,
-            color: '#55A8DE',
-            visible: true,
-            func: exp,
-            dotNum: 1000
-        });
+    try {
+        let form = document.getElementById("formula").value;
+        var exp = x => eval(form);
+        if (plotta == "") {
+            createGraph(exp);
+        } else {
+            plotta.AddLine({
+                id: form,
+                type: 'func',
+                legend: form,
+                color: '#55A8DE',
+                visible: true,
+                func: exp,
+                dotNum: 1000
+            });
+        }
+    } catch (e) {
+        alert("Expressão Inválida");
     }
 }
-
-
-function bunda() {
-    let expression = document.getElementById("formula").value;
-    let expr = math.compile(expression);
-    const xValues = math.range(-10, 10, 1).toArray();
-    const yValues = xValues.map(function(x) {
-        return expr.evaluate({ x: x })
-    });
-
-
-    let trace = {
-        x: xValues,
-        y: yValues,
-        type: 'lines',
-        line: {
-            shape: 'spline'
-        }
-        // line: { color: colors[0], width: 3, shape: 'spline' }
-    };
-
-    let data = [trace];
-
-    let layout = {
-        title: 'Gráfico',
-        showlegend: true
-    };
-
-
-    let config = {
-        responsive: true,
-        displayModeBar: false,
-        local: "pt-BR",
-        toImageButtonOptions: {
-            format: 'svg', // one of png, svg, jpeg, webp
-            filename: 'Kurumi-Graphic',
-            height: 1000,
-            width: 1200,
-            scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
-        }
-    };
-    Plotly.newPlot('graph', data, layout, config, { displayLogo: false });
-}
-
-
-// Expressão
-// Título
-// Range do axis x
-
-
-
-
-
-
-
 
 
 //Natural log
@@ -184,6 +132,7 @@ function sqrt(x) {
     return Math.sqrt(x);
 }
 
+//Absolute Value
 function abs(x) {
     return Math.abs(x);
 }
