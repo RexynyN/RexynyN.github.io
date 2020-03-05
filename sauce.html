@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Breno Nogueira" />
-    <meta name="keywords"
-        content="imagem para pdf, image to pdf, imagem pdf, image pdf, jpg to pdf, jpg para pdf, jpg pdf, png para pdf, png pdf, png to pdf, pdf creator, criador pdf, conversor pdf, pdf converter" />
+    <meta name="keywords" content="imagem para pdf, image to pdf, imagem pdf, image pdf, jpg to pdf, jpg para pdf, jpg pdf, png para pdf, png pdf, png to pdf, pdf creator, criador pdf, conversor pdf, pdf converter" />
     <meta name="description" content="Conversor de imagens para PDF online" />
     <title>Kurumi!</title>
 
@@ -20,6 +19,13 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 </head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7559326542262137",
+        enable_page_level_ads: true
+    });
+</script>
 
 <body>
     <!-- Home Page -->
@@ -32,12 +38,9 @@
                     <li><a href="index.html" class="active">Home</a></li>
                     <!-- outros links sem utilidade -->
                     <li><a href="img-pdf.html">Imagens para PDF</a></li>
-                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a
-                            href="#">Geradores/Validadores</a></li>
-                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a
-                            href="#">Conversores</a></li>
-                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a
-                            href="#">Calculadoras</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a href="#">Geradores/Validadores</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a href="#">Conversores</a></li>
+                    <li onclick="alert('Ainda não temos esta função, desculpe por isso :(');"><a href="#">Calculadoras</a></li>
                     <li><a href="#">Ferramentas</a></li>
                 </ul>
             </nav>
@@ -46,8 +49,8 @@
         <div class="center-container1">
             <div class="center-container2">
                 <div class="center-content">
-                    <h1>Bem-Vindo ao Kurumi!</h1>
-                    <h2>Seu site de ferramentas diversas. Online e Gratuito.</h2>
+                    <h1>Let's get the sauce, gamers</h1>
+                    <h2>:)</h2>
                 </div>
             </div>
         </div>
@@ -73,7 +76,8 @@
         <br><br>
         <button onclick="sauceGenerator()" class="next">Gimme the Sauce!</button>
         <br><br>
-        <a id="sauce" target="_blank" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><button class="next" id="sauceB">Your Sauce Here</button></a>
+        <a id="sauce" target="_blank" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><button class="next"
+                id="sauceB">Your Sauce Here</button></a>
         <br><br>
         <p>Now just click to get the sauce!</p>
 
@@ -96,16 +100,17 @@
     <script type="text/javascript" src="js/home.js"></script>
     <script>
         var sauce;
+
         function sauceGenerator() {
             var n = Number(document.getElementById("n").value);
             var max = Number(document.getElementById("max").value);
-            if(max < 10000 )
+            if (max < 10000)
                 max = 1000000
             var number = max + 1;
-            while(number > max || number < 10000){
-            number = Math.floor(Math.random() * Math.pow(10, n));
+            while (number > max || number < 10000) {
+                number = Math.floor(Math.random() * Math.pow(10, n));
             }
-            sauce = 'https://nhentai.net/g/' + number;  
+            sauce = 'https://nhentai.net/g/' + number;
             document.getElementById("sauce").href = sauce;
             document.getElementById("sauceB").innerText = number;
         }
@@ -113,4 +118,3 @@
 </body>
 
 </html>
-
