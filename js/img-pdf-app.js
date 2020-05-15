@@ -155,10 +155,13 @@ function handleFileSelect() {
                     var objImg = {
                         link: link,
                         file: theFile.name,
+                        extension: theFile.name.split('.').pop(),
                         width: 0,
                         height: 0,
                         stance: ""
                     }
+
+                    console.log(objImg.extension);
 
                     urls.push(objImg);
 
@@ -375,28 +378,28 @@ function createPDF() {
                         var dec;
                         if (urls[i].stance == "l") {
                             dec = new jsPDF("landscape", "mm", format);
-                            dec.addImage(urls[i].link, 'PNG', marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
+                            dec.addImage(urls[i].link, urls[i].extension , marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
                             dec.save(document.getElementById('namePDF').value + " - " + (i + 1) + '.pdf');
                         } else {
                             dec = new jsPDF("portrait", "mm", format);
-                            dec.addImage(urls[i].link, 'PNG', marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
+                            dec.addImage(urls[i].link, urls[i].extension, marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
                             dec.save(document.getElementById('namePDF').value + " - " + (i + 1) + '.pdf');
                         }
 
                     } else {
                         if (urls[i].stance == "l") {
                             if (i == 0)
-                                doc.addImage(urls[0].link, 'PNG', marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
+                                doc.addImage(urls[0].link, urls[i].extension, marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
                             else {
                                 doc.addPage(format, "l");
-                                doc.addImage(urls[i].link, 'PNG', marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
+                                doc.addImage(urls[i].link, urls[i].extension, marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
                             }
                         } else {
                             if (i == 0)
-                                doc.addImage(urls[0].link, 'PNG', marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
+                                doc.addImage(urls[0].link, urls[i].extension, marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
                             else {
                                 doc.addPage(format, "p");
-                                doc.addImage(urls[i].link, 'PNG', marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
+                                doc.addImage(urls[i].link, urls[i].extension, marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
                             }
                         }
                     }
