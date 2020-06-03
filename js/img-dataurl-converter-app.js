@@ -171,6 +171,7 @@ function handleFileSelect() {
                         quanto.innerHTML = "1/1 Imagem carregada";
 
                     count++;
+                    
                     if (count >= files.length) {
                         loading.style.display = "none";
                         btn.hidden = false;
@@ -182,6 +183,7 @@ function handleFileSelect() {
         }
     }
 }
+
 
 function setImgs() {
     for (var x = 0; x < urls.length; x++) {
@@ -225,7 +227,6 @@ btn.onclick = function() {
         });
     }
 }
-
 
 
 // ****2nd Step:Image Organization****
@@ -300,24 +301,7 @@ span.onclick = function() {
 }
 
 
-//Dimension block of modal confirmation
-check.onchange = function() {
-    if (!check.checked) {
-        divDim.style.display = "block";
-    } else {
-        divDim.style.display = "none";
-    }
-}
-
-//Changes de Sheet Size information with the selected value
-sizeSheet.onchange = function() {
-    var sheet = getSheetSize(sizeSheet.value);
-    document.getElementById("labelFormat").innerHTML = "Você selecionou o formato " + sizeSheet.value.toUpperCase();
-    document.getElementById("labelWidth").innerHTML = "Largura do Formato: " + sheet.width + "mm";
-    document.getElementById("labelHeight").innerHTML = "Altura do Formato: " + sheet.height + "mm";
-}
-
-// When the user clicks anywhere outside of the modals, close it
+// When the user clicks anywhere outside of the modals, closes it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
@@ -332,120 +316,40 @@ window.onclick = function(event) {
     }
 }
 
-//PDF creator
-function createPDF() {
-    var orientation = document.getElementById("orientationPDF").value;
-    var format = sizeSheet.value;
-    var size = getSheetSize(format);
-    var all = document.getElementById("check3");
 
+function createTxtDataURL (){
+    var text = "";
 
-    var marginL;
-    var marginU;
-    var widthM;
-    var heightM;
-
-    if (document.getElementById("check2").checked) {
-        marginL = Number.parseFloat(document.getElementById("border").value);
-        marginU = Number.parseFloat(document.getElementById("border").value);
-        widthM = size.width;
-        heightM = size.height;
-    } else {
-        marginL = Number.parseFloat(document.getElementById("marginLft").value);
-        marginU = Number.parseFloat(document.getElementById("marginUp").value);
-        widthM = Number.parseFloat(document.getElementById("widthMM").value);
-        heightM = Number.parseFloat(document.getElementById("heightMM").value);
+    for (let i = 0; i < urls.length; i++) {
+        text += urls[i].link + "\n\n@\n\n";
     }
-
-    console.log(marginL + " " + marginU + " " + widthM + " " + heightM + " ");
-
-    for (var x = 0; x < urls.length; x++) {
-        console.log(urls[x].file + "  " + urls[x].stance);
-    }
-
-    switch (orientation) {
-        case "auto":
-            if (all.checked) {
-                if (urls[0].stance == "l")
-                    doc = new jsPDF("landscape", "mm", format);
-                else
-                    doc = new jsPDF("portrait", "mm", format);
-            }
-
-            for (var i = 0; i < urls.length; i++) {
-                if (urls[i].link != null && urls[i].link != "" && urls[i].link != undefined) {
-                    if (!all.checked) {
-                        var dec;
-                        if (urls[i].stance == "l") {
-                            dec = new jsPDF("landscape", "mm", format);
-                            dec.addImage(urls[i].link, urls[i].extension , marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
-                            dec.save(document.getElementById('namePDF').value + " - " + (i + 1) + '.pdf');
-                        } else {
-                            dec = new jsPDF("portrait", "mm", format);
-                            dec.addImage(urls[i].link, urls[i].extension, marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
-                            dec.save(document.getElementById('namePDF').value + " - " + (i + 1) + '.pdf');
-                        }
-
-                    } else {
-                        if (urls[i].stance == "l") {
-                            if (i == 0)
-                                doc.addImage(urls[0].link, urls[i].extension, marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
-                            else {
-                                doc.addPage(format, "l");
-                                doc.addImage(urls[i].link, urls[i].extension, marginL, marginU, (heightM - (marginL * 2)), (widthM - (marginL * 2)));
-                            }
-                        } else {
-                            if (i == 0)
-                                doc.addImage(urls[0].link, urls[i].extension, marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
-                            else {
-                                doc.addPage(format, "p");
-                                doc.addImage(urls[i].link, urls[i].extension, marginL, marginU, (widthM - (marginL * 2)), (heightM - (marginL * 2)));
-                            }
-                        }
-                    }
-                }
-            }
-            break;
-        case "l":
-        case "p":
-            if (orientation == "l") {
-                x = heightM;
-                y = widthM;
-            } else {
-                x = widthM;
-                y = heightM;
-            }
-
-            doc = new jsPDF(orientation, "mm", format);
-            for (var i = 0; i < urls.length; i++) {
-                if (!all.checked) {
-                    doc = new jsPDF(orientation, "mm", format);
-                    doc.addImage(urls[i].link, 'PNG', marginL, marginU, (x - (marginL * 2)), (y - (marginL * 2)));
-                    doc.save(document.getElementById('namePDF').value + " - " + (i + 1) + '.pdf');
-
-                } else {
-                    if (urls[i].link != null && urls[i].link != "" && urls[i].link != undefined) {
-                        if (i == 0)
-                            doc.addImage(urls[i].link, 'PNG', marginL, marginU, (x - (marginL * 2)), (y - (marginL * 2)));
-                        else {
-                            doc.addPage(format, orientation);
-                            doc.addImage(urls[i].link, 'PNG', marginL, marginU, (x - (marginL * 2)), (y - (marginL * 2)));
-                        }
-                    }
-                }
-            }
-            break;
-    }
-
-    if (all.checked) {
-        console.log("Salvando PDF...");
-        doc.save(document.getElementById("namePDF").value + '.pdf');
-    }
-    modal2.style.display = "block";
-    modal.style.display = "none";
+    
+    var blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, document.getElementById('nameDURL').value);
 }
 
 
+// Deprecated
+function createTxtDataURLRequest(){
+
+//Save an image blob
+var xhr = new XMLHttpRequest();
+
+var url = document.getElementById("urlPhoto").value;
+
+xhr.responseType = 'blob'; //Set the response type to blob so xhr.response returns a blob
+xhr.open('GET', url , true);
+
+xhr.onreadystatechange = function () {
+    if (xhr.readyState == xhr.DONE) {
+        //When request is done
+        //xhr.response will be a Blob ready to save
+        saveAs(xhr.response, document.getElementById('nameDURL').value);
+    }
+};
+
+xhr.send();
+}
 
 // ****4th Step: Confirmation****
 
@@ -469,8 +373,7 @@ function fecharModal() {
 }
 
 pdfCreate.onclick = function() {
-    createPDF();
-    console.log();
+    createTxtDataURL();
 }
 
 
@@ -512,40 +415,3 @@ function shuffleArray(array) {
     }
 }
 
-
-function getSheetSize(sheet) {
-    switch (sheet) {
-        case "a0":
-            return { width: 841, height: 1189 };
-
-        case "a1":
-            return { width: 594, height: 841 };
-
-        case "a2":
-            return { width: 420, height: 594 };
-
-        case "a3":
-            return { width: 297, height: 420 };
-
-        case "a4":
-            return { width: 210, height: 297 };
-
-        case "a5":
-            return { width: 148, height: 210 };
-
-        case "a6":
-            return { width: 105, height: 148 };
-
-        case "a7":
-            return { width: 74, height: 105 };
-
-        case "a8":
-            return { width: 52, height: 74 };
-
-        case "a9":
-            return { width: 37, height: 52 };
-
-        case "a10":
-            return { width: 26, height: 37 };
-    }
-}

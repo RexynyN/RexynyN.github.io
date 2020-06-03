@@ -64,7 +64,6 @@
     <!-- Main -->
     <div class="scroll-arrival"></div>
     <main>
-        <img id="teste"> 
         <div id="passo2" hidden>
             <h2>Passo 2: Organize as imagens</h2>
             <p>Organize manualmente, ou deixe que a gente organiza!</p>
@@ -86,7 +85,7 @@
                             <p class="dropzone-text">Arraste as imagens aqui</p>
                             <p>ou</p>
                             <p class="dropzone-browse-text">Selecione as Imagens</p>
-                            <input type="file" accept="image/*" id="imgs" name="imgs[]" required>
+                            <input type="file" id="imgs" name="imgs[]" multiple required>
                         </div>
                     </div>
                 </label>
@@ -95,12 +94,13 @@
 
         <div id="container" hidden></div>
     </main>
+
     <!-- Footer -->
     <footer>
         <div id="helper">
-            <div class="grid-background">
-                <div id="imgOrganizer" class="grid" hidden></div>
-            </div>
+            <img id="teste1">
+            <img id="teste2">
+            <img id="teste3">
         </div>
 
         <svg style="margin-top:-8vh;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1440 319">
@@ -116,36 +116,7 @@
             <p><span class="negrito">Última atualização:</span> 20/02/2020</p>
         </div>
     </footer>
-
-    <!-- Modal -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span id="close" class="close">&times;</span>
-                <h2>Passo 3: Configurações do PDF</h2>
-            </div>
-            <form id="formPDF" class="modal-body">
-                <label>
-                    <p>Digite o nome do arquivo: </p>
-                    <input id="nameDURL" type="text" required placeholder="meu-arquivo">
-                </label>
-                <br><br>
-
-                <label>
-                    <p>Digite o link do arquivo: </p>
-                    <input id="urlPhoto" type="text" >
-                </label>
-                <br><br>
-
-                <div style="text-align: center;">
-                    <input id="pdfCreate" type="submit" value="Criar PDF" class="next">
-                </div>
-            </form>
-            <div class="modal-footer">
-                <h3 class="modal-easter-egg">Easter Egg (=^_^=)</h3>
-            </div>
-        </div>
-    </div>
+    <!-- Tags Funcionais-->
 
     <div id="myModalLoading" class="modal">
         <div class="modal-content">
@@ -172,43 +143,16 @@
         </div>
     </div>
 
-    <div id="myModal2" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span id="close2" class="close">&times;</span>
-                <h2>Passo 4: PDF Prontinho! </h2>
-            </div>
-
-            <div class="modal-body" style="text-align: center;">
-                <br>
-                <h2 style="font-weight:bold; font-size: large;">Tudo pronto, seu PDF será baixado em instantes!</h2>
-                <p>Quer fazer outro? Só fechar essa aba, colocar outros arquivos, configurar, que a gente cuida do resto! </p>
-                <div style="text-align: center;">
-                    <input type="submit" value="Fechar Aba" class="next" onclick="fecharModal();">
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <h3 class="modal-easter-egg">Easter Egg (=^_^=)</h3>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tags Funcionais-->
-
     <!-- Importações JS-->
 
     <!-- JIM CARREY-->
     <script src="js/jquery-3.4.1.js"></script>
     <!-- JSPDF -->
-    <script src="js/libraries/jspdf.debug.js"></script>
     <!-- MENU HAMBURGAO -->
     <script type="text/javascript" src="js/home.js"></script>
     <!-- modal + CÓDIGO PRINCIPAL -->
-    <script src="js/img-dataurl-converter-app.js"></script>
+    <script src="js/img-dataurl-saver-app.js"></script>
     <script src="js/libraries/FileSaver.js"></script>
-    <script src="js/libraries/muuri.min.js"></script>
-
 </body>
 
 </html>
