@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem vindo ao Alumnus! - Alumnus</title>
+    <!-- Favicon da página -->
+    <link rel="icon" href="../img/icons/favicon.ico">
+    <!-- Importação da fonte Montserrat-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <!-- Fullpage.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.min.css"
+        integrity="sha512-8M8By+q+SldLyFJbybaHoAPD6g07xyOcscIOQEypDzBS+sTde5d6mlK2ANIZPnSyxZUqJfCNuaIvjBUi8/RS0w=="
+        crossorigin="anonymous" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Owl Carousel-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <!-- Folha de estilo global -->
+    <link rel="stylesheet" href="../css/global.css">
+    <!-- Folha(s) de estilos específica(s) -->
+    <link rel="stylesheet" href="../css/tela-inicial.css">
+</head>
+
+<body>
+    <!-- navbar-->
+    <nav class="navbar fixed-top navbar-dark" id="navbar">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold notranslate" href="tela-inicial.html">ALUMNUS</a>
+            <div class="btn-group middle-buttons" role="group">
+                <a href="tela-inicial.html" class="btn text-white nav-link active notranslate"><i
+                        class="fas fa-home"></i> Home</a>
+                <a href="ranking-visitante.html" class="btn text-white nav-link"><i class="fas fa-user-friends"></i>
+                    Ranking</a>
+            </div>
+            <div class="btn-group" role="group">
+                <div class="dropdown show ">
+                    <a class="btn text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-globe-americas"></i>
+                    </a>
+                    <div class="dropdown-menu mt-1 p-3 shadow" aria-labelledby="dropdownMenuLink">
+                        <h6 class="pl-1">Idioma:</h6>
+                        <div id="google_translate_element"></div>
+                    </div>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo"
+                    aria-controls="navbarTogglerDemo" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a href="login-e-cadastro.html" class="btn text-white btn-success">Entrar <i
+                        class="fas fa-sign-in-alt"></i> </a>
+
+            </div>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link notranslate" href="tela-inicial.html#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="tela-inicial.html#funcionalidades">Funcionalidades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="tela-inicial.html#comunidade">Comunidade</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="tela-inicial.html#contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ranking-visitante.html">Ranking</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="fullpage">
+        <div class="section s1" id="section-home">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md">
+                        <img src="../img/landingPage.svg" alt="imagem auxiliar">
+                    </div>
+                    <div class="col-md texto-landing-page">
+                        <h1 class="text-white font-weight-bold m-1 mt-0 p-1 notranslate">Alumnus</h1>
+                        <h5 class="text-white m-1 p-1">O melhor planejador estudantil</h5>
+                        <div class="m-3 mb-0 p-1 btn-group btn-landing-page">
+                            <button class="btn-verde" onclick="location.href='login-e-cadastro.html'">Acessar <i
+                                    class="fas fa-sign-in-alt"></i></button>
+                            <button class="btn-roxo" onclick="location.href='#funcionalidades'"><i
+                                    class="fas fa-plus"></i> Informações</button>
+                        </div>
+                        <h5 class="text-white m-1 mb-0 p-1"><span class="font-italic">Esforço à toa</span>? Nunca
+                            mais!
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section s2" data-anchor="funcionalidades">
+            <div class="container">
+                <h3 class="mt-1 p-1 text-white text-center font-weight-bold">Confira nossas principais
+                    funcionalidades!
+                </h3>
+                <h6 class="mb-5 p-1 text-center text-white">Lembrando que todas são gratuitas...</h6>
+                <div class="cards owl-carousel owl-theme">
+                    <div class="card border-success item">
+                        <div class="card-header text-white bg-success"></div>
+                        <img class="card-img-top" src="../img/carousel-funcoes/desktop.svg" alt="Card image cap">
+                        <div class="card-body ">
+                            <h5 class="card-title font-weight-bold">Atividade</h5>
+                            <p class="card-text">Defina uma atividade para começar a fazer <span
+                                    class="negrito-roxo">agora ou quando quiser.</span></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <a href="login-e-cadastro.html" class="btn text-white btn-success">Conferir <i
+                                    class="fas fa-eye"></i> </a>
+                        </div>
+                    </div>
+                    <div class="card border-success item">
+                        <div class="card-header text-white bg-success"></div>
+                        <img class="card-img-top" src="../img/carousel-funcoes/calendar.svg" alt="Card image cap">
+                        <div class="card-body ">
+                            <h5 class="card-title font-weight-bold">Calendário Interativo</h5>
+                            <p class="card-text">Organize seu tempo de estudo <span class="negrito-roxo">criando e
+                                    arrastando atividades</span> num calendário interativo.</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <a href="login-e-cadastro.html" class="btn text-white btn-success">Conferir <i
+                                    class="fas fa-eye"></i> </a>
+                        </div>
+                    </div>
+                    <div class="card border-success item">
+                        <div class="card-header text-white bg-success"></div>
+                        <img class="card-img-top" src="../img/carousel-funcoes/clock.svg" alt="Card image cap">
+                        <div class="card-body ">
+                            <h5 class="card-title font-weight-bold">Cronômetro</h5>
+                            <p class="card-text">No Alumnus, <span class="negrito-roxo">você maximiza seu
+                                    tempo.</span>
+                                Todas
+                                as atividades são cronometradas.</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <a href="login-e-cadastro.html" class="btn text-white btn-success">Conferir <i
+                                    class="fas fa-eye"></i> </a>
+                        </div>
+                    </div>
+                    <div class="card border-success item">
+                        <div class="card-header text-white bg-success"></div>
+                        <img class="card-img-top" src="../img/carousel-funcoes/note.svg" alt="Card image cap">
+                        <div class="card-body ">
+                            <h5 class="card-title font-weight-bold">Metas</h5>
+                            <p class="card-text">Estabeleça metas numa atividade. <span class="negrito-roxo">Resolvendo
+                                    de uma em uma, você evolui.</span></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <a href="login-e-cadastro.html" class="btn text-white btn-success">Conferir <i
+                                    class="fas fa-eye"></i> </a>
+                        </div>
+                    </div>
+                    <div class="card border-success item">
+                        <div class="card-header text-white bg-success"></div>
+                        <img class="card-img-top" src="../img/carousel-funcoes/notebook.svg" alt="Card image cap">
+                        <div class="card-body ">
+                            <h5 class="card-title font-weight-bold">Anotações</h5>
+                            <p class="card-text">Anote para não esquecer. Mesmo que esqueça, <span
+                                    class="negrito-roxo">revise na hora que precisar.</span></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <a href="login-e-cadastro.html" class="btn text-white btn-success">Conferir <i
+                                    class="fas fa-eye"></i> </a>
+                        </div>
+                    </div>
+                    <div class="card border-success item">
+                        <div class="card-header text-white bg-success"></div>
+                        <img class="card-img-top" src="../img/carousel-funcoes/schedule.svg" alt="Card image cap">
+                        <div class="card-body ">
+                            <h5 class="card-title font-weight-bold">Cronograma</h5>
+                            <p class="card-text">Faça uma organização para sua semana e <span
+                                    class="negrito-roxo">comece todos os dias com o pé direito.</span></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <a href="login-e-cadastro.html" class="btn text-white btn-success">Conferir <i
+                                    class="fas fa-eye"></i> </a>
+                        </div>
+                    </div>
+                    <div class="card border-success item">
+                        <div class="card-header text-white bg-success"></div>
+                        <img class="card-img-top" src="../img/carousel-funcoes/bell.svg" alt="Card image cap">
+                        <div class="card-body ">
+                            <h5 class="card-title font-weight-bold">Alertas</h5>
+                            <p class="card-text"><span class="negrito-roxo">Fique de cabeça fria.</span> Você será
+                                alertado
+                                quando suas atividades estiverem prestes a começar.</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <a href="login-e-cadastro.html" class="btn text-white btn-success">Conferir <i
+                                    class="fas fa-eye"></i> </a>
+                        </div>
+                    </div>
+                    <div class="card border-success item">
+                        <div class="card-header text-white bg-success"></div>
+                        <img class="card-img-top" src="../img/carousel-funcoes/mortarboard.svg" alt="Card image cap">
+                        <div class="card-body ">
+                            <h5 class="card-title font-weight-bold">Ranking de Usuários</h5>
+                            <p class="card-text">Compare sua evolução em um sistema de pontos <span
+                                    class="negrito-roxo">com quem estuda pra valer.</span></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center">
+                            <!-- MUITO CUIDADO QUE O RANKING TEM LINK DIFERENTE-->
+                            <a href="ranking-visitante.html" class="btn text-white btn-success">Conferir <i
+                                    class="fas fa-eye"></i> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section s3">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+            <div class="wave wave4"></div>
+            <h3 class="mt-5 p-1 pt-5 text-center text-white font-weight-bold">Comunidade</h3>
+            <h6 class="px-4 text-white text-center">O Alumnus possui cerca de <span class="font-weight-bold">1000
+                    usuários</span> cadastrados.</h6> <!-- INFORMAÇÃO DINAMICA-->
+            <div class="container p-3">
+                <div class="row d-flex justify-content-around align-items-end">
+                    <div class="col-lg-7 col-md-12 shadow text-left" id="container-arredondado">
+                        <div class="testimonial-section">
+                            <h3 class="text-center p-1 font-weight-bold">Como os usuários descrevem o Alumnus</h3>
+                            <div class="testimonial-contents">
+                                <div class="testimonial-pics">
+                                    <img src="../img/testimonial/p1.jpg" alt="test-1">
+                                    <img src="../img/testimonial/p2.jpg" alt="test-2" class="active">
+                                    <img src="../img/testimonial/p3.jpg" alt="test-3">
+                                </div>
+                                <div class="testimonial" id="test-1">
+                                    <p class="font-italic py-1 px-3">Melhorei meu foco e minha discplina nos estudos com
+                                        o Alumnus. O melhor de tudo: é grátis.</p>
+                                    <h6 class="mt-2 p-1 text-center text-uppercase negrito-roxo">Pedro Henrique B.
+                                        Santos</h6>
+                                </div>
+                                <div class="testimonial active" id="test-2">
+                                    <p class="font-italic py-1 px-3">Com a ajuda do Alumnus, consegui planejar melhor os
+                                        meus estudos na faculdade e,
+                                        por consequência, comecei a ter menos dor de cabeça e mais tempo livre.</p>
+                                    <h6 class="mt-2 p-1 text-center text-uppercase negrito-roxo">Alexandre Godlewski
+                                    </h6>
+                                </div>
+                                <div class="testimonial" id="test-3">
+                                    <p class="font-italic py-1 px-3">Quando vejo uma pessoa que está com difculdades nos
+                                        estudos, sempre recomendo o Alumnus. Acredito que o esforço inteligente é a
+                                        chave para superar qualquer obstáculo.</p>
+                                    <h6 class="mt-2 p-1 text-center text-uppercase negrito-roxo">Dr. Miguel Freixo</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-none d-sm-none d-md-none d-lg-block col-lg-5 center-image text-right"
+                        id="img-feedback">
+                        <img src="../img/speaker.svg" alt="feedback">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section fp-auto-height s4">
+            <div class="container p-3 mt-3 mb-5">
+                <div class="row d-flex justify-content-around align-items-center mt-5">
+                    <div class="col-lg-5 col-md-12 px-5">
+                        <h3 class="p-1 text-center text-white font-weight-bold">Contate a gente!</h3>
+                        <h6 class="p-1 mb-1 text-white text-center">Você receberá um e-mail com a resposta.</h6>
+                        <div class="mt-5 center-image d-none d-sm-none d-md-none d-lg-block">
+                            <img src="../img/email.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-12 shadow">
+                        <form class="p-3 my-2">
+                            <h3 class="text-center font-weight-bold py-3">Contato</h3>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail"
+                                        placeholder="email@email.com">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputNome">Nome</label>
+                                    <input type="text" class="form-control" id="inputNome"
+                                        placeholder="Insira seu nome">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAssunto">Assunto</label>
+                                <input type="text" class="form-control" id="inputAssunto"
+                                    placeholder="Insira o assunto da mensagem">
+                            </div>
+                            <div class="form-group">
+                                <label for="textarea-recado" class="textarea-recado">Escreva seu recado</label>
+                                <textarea class="form-control" id="textarea-recado" rows="3"></textarea>
+                            </div>
+                            <div class="btn-landing-page">
+                                <button class="btn-verde">Enviar <i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer p-2">
+                <div class="container">
+                    <div class="social-icons text-center">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- Dropdown menu-->
+    <script>
+        $('.dropdown-menu').on({
+            "click": function (e) {
+                e.stopPropagation();
+            }
+        });
+    </script>
+    <!-- Importação Fullpage.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.min.js"
+        integrity="sha512-Gx/C4x1qubng2MWpJIxTPuWch9O88dhFFfpIl3WlqH0jPHtCiNdYsmJBFX0q5gIzFHmwkPzzYTlZC/Q7zgbwCw=="
+        crossorigin="anonymous"></script>
+    <script>
+        var fullpage = new fullpage("#fullpage", {
+            autoScrolling: false,
+            navigation: true,
+            fitToSection: true,
+            navigationTooltips: ["Home", "Funcionalidades", "Comunidade", "Contato"],
+            anchors: ['home', 'funcionalidades', "comunidade", "contato"],
+            showActiveTooltip: false,
+            navigationPosition: "right",
+            scrollBar: true,
+            scrollHorizontally: true
+        });
+
+        fullpage_api.setAllowScrolling(true);
+
+    </script>
+    <!-- Importação da biblioteca de icones FontAwesome-->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Owl carousel-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+        $(".cards.owl-carousel").owlCarousel({
+            loop: true,
+            autoplay: true,
+            margin: 12,
+            stagePadding: 40,
+            autoplayTimeout: 6000,
+            autoplayHoverPause: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                678: {
+                    items: 2
+                },
+                1100: {
+                    items: 3
+                }
+            }
+        });
+    </script>
+    <!-- Código JS da testimonial -->
+    <script>
+        $('.testimonial-pics img').click(function () {
+            $(".testimonial-pics img").removeClass("active");
+            $(this).addClass("active");
+
+            $(".testimonial").removeClass("active");
+            $("#" + $(this).attr("alt")).addClass("active");
+        });
+    </script>
+    <!-- Tradução da página-->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'pt', includedLanguages: 'en,pt' }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+
+</html>
