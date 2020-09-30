@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faça parte do Alumnus! - Alumnus</title>
+    <!-- Favicon da página -->
+    <link rel="icon" href="../img/icons/favicon.ico">
+    <!-- Importação da fonte Montserrat-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <!-- Folha de estilo global -->
+    <link rel="stylesheet" href="../css/global.css">
+    <!-- Folha(s) de estilos específica(s) -->
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+    <!-- Formulário -->
+    <div class="context">
+        <img src="../img/monstro-login/idle/1.png" alt="Monstro" id="monster">
+        <div>
+            <div class="wrapper">
+                <div class="title-text">
+                    <div class="title login">
+                        Login</div>
+                    <div class="title signup">
+                        Cadastre-se</div>
+                </div>
+                <div class="form-container">
+                    <div class="slide-controls">
+                        <input type="radio" name="slide" id="login" checked>
+                        <!-- Abre primeiro o login por estar checked-->
+                        <input type="radio" name="slide" id="signup">
+                        <label for="login" class="slide login">Login</label>
+                        <label for="signup" class="slide signup">Cadastre-se</label>
+                        <div class="slider-tab">
+                        </div>
+                    </div>
+                    <div class="form-inner">
+                        <form action="" onsubmit="return false;" class="login">
+                            <!--LEVA PRA TELA PRINCIPAL DA APLICAÇÃO-->
+                            <div class="wrapper-input">
+                                <div class="input-data">
+                                    <input onfocus="follow=false" onblur="follow=true" id="loginEmail" type="text"
+                                        name="loginEmail" required>
+                                    <div class="underline">
+                                    </div>
+                                    <label>Insira seu e-mail</label>
+                                </div>
+                            </div>
+                            <div class="wrapper-input">
+                                <div class="input-data">
+                                    <input onfocus="cover()" onblur="uncover()" type="password" name="loginSenha"
+                                        id="loginSenha" required>
+                                    <div class="underline">
+                                    </div>
+                                    <label>Insira sua senha</label>
+                                </div>
+                            </div>
+                            <div class="pass-link">
+                                <a href="#">Esqueci minha senha</a></div>
+                            <div class="field btn">
+                                <div class="btn-layer">
+                                </div>
+                                <input type="submit" value="Entrar" onclick="handleLogin();" id="loginBtn">
+                            </div>
+
+                            <div class="signup-link">
+                                Não tem conta? <a href="">Cadastre-se aqui</a></div>
+                        </form>
+                        <form action="" onsubmit="return false;" class="signup">
+                            <div class="wrapper-input">
+                                <div class="input-data">
+                                    <input onfocus="follow=false" onblur="follow=true" type="text" name="signupEmail"
+                                        id="signupEmail" required>
+                                    <div class="underline">
+                                    </div>
+                                    <label>Insira seu e-mail</label>
+                                </div>
+                            </div>
+                            <div class="wrapper-input">
+                                <div class="input-data">
+                                    <input onfocus="follow=false" onblur="follow=true" type="text" name="signupNickname"
+                                        id="signupNickname" required>
+                                    <div class="underline">
+                                    </div>
+                                    <label>Insira seu apelido (nickname)</label>
+                                </div>
+                            </div>
+                            <div class="wrapper-input">
+                                <div class="input-data">
+                                    <input onfocus="cover()" onblur="uncover()" type="password" name="signupSenha"
+                                        id="signupSenha" required>
+                                    <div class="underline">
+                                    </div>
+                                    <label>Insira sua senha</label>
+                                </div>
+                            </div>
+                            <div class="wrapper-input">
+                                <div class="input-data">
+                                    <input onfocus="cover()" onblur="uncover()" type="password" name="signupSenhaRep"
+                                        id="signupSenhaRep" required>
+                                    <div class="underline">
+                                    </div>
+                                    <label>Insira sua senha novamente</label>
+                                </div>
+                            </div>
+                            <div class="field btn">
+                                <div class="btn-layer">
+                                </div>
+                                <input type="submit" value="Cadastrar" onclick="handleSignup();" id="signupBtn">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parte da animação-->
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <!-- SCRIPTS IMPORTADOS -->
+
+    <!-- Alternar entre login e cadastro-->
+    <script src="../js/alternarEntreLoginSignup.js"> </script>
+    <!-- Comportamento do monstro-->
+    <script src="../js/monstroLogin.js"> </script>
+    <!-- Importação da biblioteca de icones FontAwesome-->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!--Importação do Axios-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+        crossorigin="anonymous"></script>
+    <!--Importação do Axios-->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+    <script>
+        function handleLogin() {
+            let data = {
+                email: document.getElementById('loginEmail').value.trim(),
+                senha: document.getElementById('loginSenha').value.trim()
+            };
+
+            console.log(data);
+            axios.post('https://alumnus-api.herokuapp.com/user/login', data)
+            .then(function (response) {
+                console.log(response.data);
+
+                if (response.data.status != 2) {
+                    Cookies.set('userId', response.idUsuario);
+                    alert("Usuário foi autenticado. Id de Usuário: " + response.data.idUsuario);
+                    // window.location.assign('tela-principal.html');
+                } else {
+                    alert("Usuário não foi autenticado, tente novamente");
+                }
+            });
+
+        }
+
+        function handleSignup (){
+            let data = {
+                email: document.getElementById('signupEmail').value.trim(),
+                nickname: document.getElementById('signupNickname').value.trim(),
+                senha: document.getElementById('signupSenha').value.trim(),
+                confirmaSenha: document.getElementById('signupSenhaRep').value.trim()
+            };
+
+            console.log(data);
+            axios.post('https://alumnus-api.herokuapp.com/user/signup', data)
+            .then(function (response) {
+                console.log(response.data);
+
+                if (response.data.status != 2) {
+                    alert("Usuário foi criado. Id de Usuário: " + response.data.idUsuario);
+                    // window.location.assign('tela-principal.html');
+                } else {
+                    alert("Usuário não foi criado. Motivo: " + response.data.mensagem);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

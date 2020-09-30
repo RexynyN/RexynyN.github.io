@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnus</title>
+    <!-- Favicon da página -->
+    <link rel="icon" href="../img/icons/favicon.ico">
+    <!-- Importação da fonte Montserrat-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Folha de estilo global -->
+    <link rel="stylesheet" href="../css/global.css">
+    <!-- Folha(s) de estilos específica(s) -->
+    <link rel="stylesheet" href="../css/tela-principal.css">
+</head>
+
+<body>
+    <div class="wrapper active">
+
+        <div class="top_navbar">
+            <div class="logo">
+                <a href="tela-principal.html">ALUMNUS</a>
+            </div>
+            <div class="top_menu">
+                <div>
+                    <a href="#" class="btn btn-danger">Sair
+                    </a>
+                </div>
+                <div class="right_info">
+                    <div class="dropdown show">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <div class="icon_wrap">
+                                <div class="icon">
+                                    <i class="fas fa-globe-americas fa-fw"></i>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu mt-1 p-3 shadow" aria-labelledby="dropdownMenuLink">
+                            <h6 class="pl-1">Idioma:</h6>
+                            <div id="google_translate_element"></div>
+                        </div>
+                    </div>
+                    <a data-toggle="modal" data-target="#exampleModalCenter">
+                        <div class="icon_wrap">
+                            <div class="icon">
+                                <i class="fas fa-bell fa-fw bell-active" id="bell"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main_body">
+
+            <div class="sidebar_menu">
+                <div class="inner__sidebar_menu">
+                    <ul>
+                        <li>
+                            <a href="tela-principal.html" class="active">
+                                <span class="icon"><i class="fas fa-home fa-fw"></i></span>
+                                <span class="list">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <span class="icon">
+                                        <i class="fas fa-pencil-alt fa-fw"></i>
+                                        <span class="list pl-2">Atividades</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-roxo ml-4 shadow">
+                                    <a class="dropdown-item" href="atividade.html">Menu - Atividades</a>
+                                    <a class="dropdown-item" href="programar-atividade.html">Fazer atividade agora</a>
+                                    <a class="dropdown-item" href="historico-atividade.html">Histórico</a>
+                                </div>
+                            </div>
+                        <li>
+                            <a href="#">
+                                <span class="icon"><i class="far fa-calendar-alt fa-fw"></i>
+                                </span>
+                                <span class="list">Calendário</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
+                                </span>
+                                <span class="list">Cronograma</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="icon"><i class="fas fa-quote-left fa-fw"></i>
+                                </span>
+                                <span class="list">Publicações</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ranking-usuario.html">
+                                <span class="icon"><i class="fas fa-user-friends fa-fw"></i>
+                                </span>
+                                <span class="list">Ranking</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="perfil.html">
+                                <span class="icon"><i class="fas fa-address-card fa-fw"></i></span>
+                                <span class="list">Perfil</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="hamburger">
+                        <div class="inner_hamburger">
+                            <span class="arrow">
+                                <i class="fas fa-long-arrow-alt-left"></i>
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <h1 class="mt-5">Home</h1>
+                <h5>Página principal do Alumnus</h5>
+                <hr>
+                <div class="p-3 main mt-2">
+                    <div class="text-center">
+                        <h4 class="font-weight-bold pt-2">Explore nossas ferramentas!</h4>
+                        <div class="row mt-4 px-5 d-flex justify-content-center align-items-stretch">
+                            <a href="#">
+                                <div class="card m-2 p-2">
+                                    <div class="card-body">
+                                        <i class="far fa-calendar-alt fa-fw fa-4x"></i>
+                                        <h5 class="mt-3 font-weight-bold">Calendário</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="atividade.html">
+                                <div class="card m-2 p-2">
+                                    <div class="card-body">
+                                        <i class="fas fa-pencil-alt fa-fw fa-4x"></i>
+                                        <h5 class="mt-3 font-weight-bold">Atividades</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="card m-2 p-2">
+                                    <div class="card-body">
+                                        <i class="fas fa-clipboard-list fa-fw fa-4x"></i>
+                                        <h5 class="mt-3 font-weight-bold">Cronograma</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="card m-2 p-2">
+                                    <div class="card-body">
+                                        <i class="fas fa-quote-left fa-fw fa-4x"></i>
+                                        <h5 class="mt-3 font-weight-bold">Publicações</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="perfil.html">
+                                <div class="card m-2 p-2">
+                                    <div class="card-body">
+                                        <i class="fas fa-address-card fa-fw fa-4x"></i>
+                                        <h5 class="mt-3 font-weight-bold">Perfil</h5>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="ranking-usuario.html">
+                                <div class="card m-2 p-2">
+                                    <div class="card-body">
+                                        <i class="fas fa-user-friends fa-fw fa-4x"></i>
+                                        <h5 class="mt-3 font-weight-bold">Ranking</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Notificações-->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Notificações</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item text-justify">Você está entre os 100 melhores da semana! <button
+                                class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
+                        <li class="list-group-item text-justify">Sua próxima atividade começa em 5 minutos! <button
+                                class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
+                        <li class="list-group-item text-justify">Você cadastrou uma nova atividade em 02/10/2020.<button
+                                class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- Dropdown menu-->
+    <script>
+        $('.dropdown-menu').on({
+            "click": function (e) {
+                e.stopPropagation();
+            }
+        });
+    </script>
+    <!-- Menu hamburguer-->
+    <script>
+
+        $(".hamburger").click(function () {
+            $(".wrapper").toggleClass("active")
+        })
+    </script>
+    <!-- Importação da biblioteca de icones FontAwesome-->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Tradução da página-->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'pt', includedLanguages: 'en,pt' }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        var close = document.getElementsByClassName("fechar");
+
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
