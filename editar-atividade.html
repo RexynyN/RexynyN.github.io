@@ -236,10 +236,11 @@
     <script>
         var close = document.getElementsByClassName("fechar");
         var token = getCookie("token");
-        
+        var activityId;
+
         function getCookie(cname) {
             var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);    
+            var decodedCookie = decodeURIComponent(document.cookie);
             var ca = decodedCookie.split(';');
             for (var i = 0; i < ca.length; i++) {
                 var c = ca[i];
@@ -264,13 +265,13 @@
         window.onload = function () {
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
-            const activityId = urlParams.get('activityId');
+            activityId = urlParams.get('activityId');
 
             axios.get('https://alumnus-api.herokuapp.com/activity/show/' + activityId, { headers: { 'Authorization': 'Bearer ' + token } })
                 .then(function (response) {
                     console.log(response.data);
 
-                    if(response.data.status == 3){
+                    if (response.data.status == 3) {
                         window.location.assign('login-e-cadastro.html');
                     }
 
@@ -311,6 +312,7 @@
             } else {
 
                 let coisas = {
+                    id: activityId,
                     agrupador,
                     titulo,
                     descricao,
@@ -320,7 +322,7 @@
 
                 console.log(coisas);
 
-                axios.post('https://alumnus-api.herokuapp.com/activity/edit', coisas, { headers: { 'Authorization': 'Bearer ' + token } })
+                axios.post('https://alumnus-api.herokuapp.com/activity/edit/', coisas, { headers: { 'Authorization': 'Bearer ' + token, 'Access-Control-Allow-Origin': '*' } })
                     .then(function (response) {
 
                         console.log(response.data);
@@ -334,7 +336,7 @@
             }
         }
 
-        function logoff(){
+        function logoff() {
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.assign('tela-inicial.html');
         }

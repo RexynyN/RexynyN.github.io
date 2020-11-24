@@ -73,6 +73,7 @@
                                     <span class="icon">
                                         <i class="fas fa-pencil-alt fa-fw"></i>
                                         <span class="list pl-2">Atividades</span>
+                                    </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-roxo ml-4 shadow">
                                     <a class="dropdown-item" href="atividade.html">Menu - Atividades</a>
@@ -142,7 +143,7 @@
                                     <label for="meta">Escreva uma meta</label>
                                     <div class="d-flex">
                                         <input type="text" class="form-control mr-2" id="meta"
-                                            placeholder="Digite uma meta">
+                                            placeholder="Terminar faltando metade do tempo, Acabar a lista hoje...">
                                         <button class="btn btn-secondary"
                                             style="background: var(--cor-primaria-3);">Adicionar</button>
                                     </div><br>
@@ -238,8 +239,57 @@
     </script>
     <!-- Timer -->
     <script>
-        window.onload = function () {
+        var token = getCookie("token");
+        var activityId;
 
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        window.onload = function () {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            activityId = urlParams.get('activityId');
+
+            axios.get('https://alumnus-api.herokuapp.com/activity/show/' + activityId, { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+                    console.log(response.data);
+
+                    if (response.data.status == 3) {
+                        window.location.assign('login-e-cadastro.html');
+                    }
+
+                    if (response.data.status !== 2) {
+                        var dados = response.data.response;
+
+                        document.getElementById("agrupador-atividade").value = dados.agrupador;
+                        document.getElementById("titulo-atividade").value = dados.titulo;
+                        document.getElementById("descricao-atividade").value = dados.descricao;
+                        document.getElementById("tempo-atividade").value = dados.tempoPrevisto;
+
+                        var data = dados.dataAtividade.split("T")[0];
+                        var time = dados.dataAtividade.split("T")[1];
+
+                        time = time.split(":00.000Z")[0];
+                        document.getElementById("data-atividade").value = data;
+                        document.getElementById("data-tempo-atividade").value = time;
+                    } else {
+                        alert("Houve um erro ao retornar as atividades.");
+                    }
+
+                });
         }
 
         // Set the date we're counting down to
