@@ -27,8 +27,7 @@
             </div>
             <div class="top_menu">
                 <div>
-                    <a href="#" class="btn btn-danger">Sair
-                    </a>
+                    <button onclick="logoff()" class="btn btn-danger">Sair</button>
                 </div>
                 <div class="right_info">
                     <div class="dropdown show">
@@ -89,14 +88,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="cronograma.html">
                                 <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
                                 </span>
                                 <span class="list">Cronograma</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="publicacoes.html">
                                 <span class="icon"><i class="fas fa-quote-left fa-fw"></i>
                                 </span>
                                 <span class="list">Publicações</span>
@@ -152,7 +151,7 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="#">
+                            <a href="cronograma.html">
                                 <div class="card m-2 p-2">
                                     <div class="card-body">
                                         <i class="fas fa-clipboard-list fa-fw fa-4x"></i>
@@ -160,7 +159,7 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="#">
+                            <a href="publicacoes.html">
                                 <div class="card m-2 p-2">
                                     <div class="card-body">
                                         <i class="fas fa-quote-left fa-fw fa-4x"></i>
@@ -259,6 +258,11 @@
                 var div = this.parentElement;
                 div.style.display = "none";
             }
+        }
+
+        function logoff(){
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.assign('tela-inicial.html');
         }
 
     </script>

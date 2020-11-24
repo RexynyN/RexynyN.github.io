@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking - Alumnus</title>
+    <title>Atividades - Alumnus</title>
     <!-- Favicon da página -->
     <link rel="icon" href="../img/icons/favicon.ico">
     <!-- Importação da fonte Montserrat-->
@@ -12,12 +12,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- datatable -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
     <!-- Folha de estilo global -->
     <link rel="stylesheet" href="../css/global.css">
     <!-- Folha(s) de estilos específica(s) -->
-    <link rel="stylesheet" href="../css/ranking-usuario.css">
+    <link rel="stylesheet" href="../css/atividade.css">
 </head>
 
 <body>
@@ -130,30 +128,24 @@
             </div>
 
             <div class="container">
-                <h1 class="mt-5">Ranking Semanal</h1>
+                <h1 class="mt-5">Cronograma</h1>
+                <h5>Confira todas as suas futuras atividades aqui!</h5>
+                <hr>
                 <hr>
                 <div class="p-3 mt-2">
-                    <div class="row d-flex justify-content-around align-items-center">
-                        <div class="col-lg-4 col-md-12 px-5">
-                            <div class="center-image d-none d-sm-none d-md-none d-lg-block">
-                                <img src="../img/ranking.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-8 col-md-12">
-                            <table id="example" class="table table-striped table-bordered" style="max-width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Posição</th>
-                                        <th>Nickname</th>
-                                        <th>Pontos</th>
-                                    </tr>
-                                </thead>
-                                    <tbody id="table-content">
-                               
-                                    </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <table id="example" class="table table-striped table-bordered" style="max-width:100%">
+                        <thead>
+                            <tr>
+                                <th>Titulo</th>
+                                <th>Descrição</th>
+                                <th>Data de Atividade</th>
+                                <th>Agrupador</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-content">
+                           
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -211,6 +203,8 @@
     </script>
     <!-- Importação da biblioteca de icones FontAwesome-->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" crossorigin="anonymous"></script>
+
     <!-- Tradução da página-->
     <script>
         function googleTranslateElementInit() {
@@ -220,6 +214,23 @@
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         var close = document.getElementsByClassName("fechar");
+        var token = getCookie("token");
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);    
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
 
         var i;
         for (i = 0; i < close.length; i++) {
@@ -229,40 +240,103 @@
             }
         }
 
-    </script>
-    <!-- datatable-->
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-   <!-- Importação axios-->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
-   integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
-   crossorigin="anonymous"></script>
-   <!-- Ranking-->
-   <script>
-       window.onload = () => {
-           let table = document.getElementById("table-content");
 
-           axios.get('https://alumnus-api.herokuapp.com/user/ranking/?top=10', ).then(function (response) {
+        window.onload = () => {
 
-                   let rank = response.data.usuarios;
+            let table = document.getElementById("table-content");
 
-                   for (var i = 0; i < rank.length; i++) {
-                       let htmlComponents = "<td>" + (i+1) + "</td>";
-                       htmlComponents += "<td>" + rank[i].nickname + "</td>";
-                       htmlComponents += "<td>" + rank[i].pontuacao + "</td>";
-                       let tr = document.createElement("tr");
-                       tr.innerHTML = htmlComponents;
-                       table.appendChild(tr);
-                   }
-               });
-       }
+            axios.get('https://alumnus-api.herokuapp.com/activity/list?limit=1000&page=1', { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+                    console.log(response.data);
 
-       function logoff(){
+                    if(response.data.status == 3){
+                        window.location.assign('login-e-cadastro.html');
+                    }
+
+                    if (response.data.status == 1) {
+                        let atvs = response.data.activities;
+
+                        for (var i = 0; i < atvs.length; i++) {
+                            let htmlComponents = "<td><a href='fazendo-atividade.html?activityId="+atvs[i].id+"'>" + atvs[i].titulo + "</a></td>";
+                            htmlComponents += "<td>" + atvs[i].descricao + "</td>";
+                            let d = new Date(atvs[i].dataAtividade);
+                            htmlComponents += "<td>" + formataData(d) + "</td>";
+                            htmlComponents += "<td>" + atvs[i].agrupador + "</td>";
+                            let tr = document.createElement("tr");
+                            tr.innerHTML = htmlComponents;
+                            table.appendChild(tr);
+                        }
+
+                    } else if (response.data.status == 2) {
+                        alert("Houve um erro ao retornar as atividades.");
+                    }
+                });
+        }
+
+        function formataData(n) {
+            var mm = n.getMonth() + 1;
+            var dd = n.getDate();
+            var hh = n.getHours() + 3;
+            var min = n.getMinutes();
+
+            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
+
+            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
+
+            return data + " " + time;
+        };
+
+
+
+        function formataData(n) {
+            var mm = n.getMonth() + 1;
+            var dd = n.getDate();
+            var hh = n.getHours() + 3;
+            var min = n.getMinutes();
+
+            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
+
+            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
+
+            return data + " " + time;
+        };
+
+
+
+        function formataData(n) {
+            var mm = n.getMonth() + 1;
+            var dd = n.getDate();
+            var hh = n.getHours() + 3;
+            var min = n.getMinutes();
+
+            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
+
+            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
+
+            return data + " " + time;
+        };
+
+
+
+        function formataData(n) {
+            var mm = n.getMonth() + 1;
+            var dd = n.getDate();
+            var hh = n.getHours() + 3;
+            var min = n.getMinutes();
+
+            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
+
+            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
+
+            return data + " " + time;
+        };
+
+
+        function logoff(){
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.assign('tela-inicial.html');
         }
-           
-   </script>
+    </script>
 </body>
 
 </html>

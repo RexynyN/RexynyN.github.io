@@ -78,8 +78,7 @@
         <div id="page-container">
             <div class="container my-2">
                 <h2 class="font-weight-bold p-2">Ranking de usuários <span class="negrito-roxo">Alumnus</span></h2>
-                <h5 class="p-1">Compare seu <span class="negrito-roxo">desempenho</span> com os outros usuários da
-                    plataforma!</h5>
+                <h5 class="p-1">Confira o <span class="negrito-roxo">TOP 10</span> usuários com melhor desempenho dentro da plataforma!</h5>
                 <div class="row d-flex justify-content-around align-items-center mt-5">
                     <div class="col-lg-4 col-md-12 px-5">
                         <div class="center-image d-none d-sm-none d-md-none d-lg-block">
@@ -95,67 +94,8 @@
                                     <th>Pontos</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Romário</td>
-                                    <td>980</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Ronaldo</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Pelé</td>
-                                    <td>870</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Ribamar</td>
-                                    <td>860</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Bebeto</td>
-                                    <td>850</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Luan Santana</td>
-                                    <td>800</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Yago Pikachu</td>
-                                    <td>700</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Linus Torvalds</td>
-                                    <td>600</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Ronaldinho</td>
-                                    <td>500</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Santana</td>
-                                    <td>450</td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td>Xandy</td>
-                                    <td>400</td>
-                                </tr>
-                                <tr>
-                                    <td>12</td>
-                                    <td>Júnior</td>
-                                    <td>300</td>
-                                </tr>
+                            <tbody id="table-content">
+                               
                             </tbody>
                         </table>
                     </div>
@@ -193,54 +133,35 @@
             }
         });
     </script>
+    <!-- Importação axios-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+    integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+    crossorigin="anonymous"></script>
+    <!-- Ranking-->
+    <script>
+        window.onload = () => {
+            let table = document.getElementById("table-content");
+
+            axios.get('https://alumnus-api.herokuapp.com/user/ranking/?top=10', ).then(function (response) {
+
+                    let rank = response.data.usuarios;
+
+                    for (var i = 0; i < rank.length; i++) {
+                        let htmlComponents = "<td>" + (i+1) + "</td>";
+                        htmlComponents += "<td>" + rank[i].nickname + "</td>";
+                        htmlComponents += "<td>" + rank[i].pontuacao + "</td>";
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = htmlComponents;
+                        table.appendChild(tr);
+                    }
+                });
+        }
+            
+    </script>
     <!-- datatable-->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                language: {
-                    "sEmptyTable": "Nenhum registro encontrado",
-                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ".",
-                    "sLengthMenu": "_MENU_ resultados por página",
-                    "sLoadingRecords": "Carregando...",
-                    "sProcessing": "Processando...",
-                    "sZeroRecords": "Nenhum registro encontrado",
-                    "sSearch": "Pesquisar",
-                    "oPaginate": {
-                        "sNext": "Próximo",
-                        "sPrevious": "Anterior",
-                        "sFirst": "Primeiro",
-                        "sLast": "Último"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Ordenar colunas de forma ascendente",
-                        "sSortDescending": ": Ordenar colunas de forma descendente"
-                    },
-                    "select": {
-                        "rows": {
-                            "_": "Selecionado %d linhas",
-                            "0": "Nenhuma linha selecionada",
-                            "1": "Selecionado 1 linha"
-                        }
-                    },
-                    "buttons": {
-                        "copy": "Copiar para a área de transferência",
-                        "copyTitle": "Cópia bem sucedida",
-                        "copySuccess": {
-                            "1": "Uma linha copiada com sucesso",
-                            "_": "%d linhas copiadas com sucesso"
-                        }
-                    }
-                },
-                responsive: true
-            });
-        });
-    </script>
+
     <!-- Importação da biblioteca de icones FontAwesome-->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <!-- Tradução da página-->
@@ -249,6 +170,7 @@
             new google.translate.TranslateElement({ pageLanguage: 'pt', includedLanguages: 'en,pt' }, 'google_translate_element');
         }
     </script>
+
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 

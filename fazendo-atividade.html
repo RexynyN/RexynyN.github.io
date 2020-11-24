@@ -27,8 +27,7 @@
             </div>
             <div class="top_menu">
                 <div>
-                    <a href="#" class="btn btn-danger">Sair
-                    </a>
+                    <button onclick="logoff()" class="btn btn-danger">Sair</button>
                 </div>
                 <div class="right_info">
                     <div class="dropdown show">
@@ -89,14 +88,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="cronograma.html">
                                 <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
                                 </span>
                                 <span class="list">Cronograma</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="publicacoes.html">
                                 <span class="icon"><i class="fas fa-quote-left fa-fw"></i>
                                 </span>
                                 <span class="list">Publicações</span>
@@ -142,8 +141,10 @@
                                 <div id="app">
                                     <label for="meta">Escreva uma meta</label>
                                     <div class="d-flex">
-                                        <input type="text" class="form-control mr-2" id="meta" placeholder="Digite uma meta">
-                                        <button class="btn btn-secondary" style="background: var(--cor-primaria-3);">Adicionar</button>
+                                        <input type="text" class="form-control mr-2" id="meta"
+                                            placeholder="Digite uma meta">
+                                        <button class="btn btn-secondary"
+                                            style="background: var(--cor-primaria-3);">Adicionar</button>
                                     </div><br>
                                     <ul class="border p-3"></ul>
                                 </div>
@@ -187,146 +188,152 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-        <!-- Dropdown menu-->
-        <script>
-            $('.dropdown-menu').on({
-                "click": function (e) {
-                    e.stopPropagation();
-                }
-            });
-        </script>
-        <!-- Menu hamburguer-->
-        <script>
-
-            $(".hamburger").click(function () {
-                $(".wrapper").toggleClass("active")
-            })
-        </script>
-        <!-- Importação da biblioteca de icones FontAwesome-->
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-        <!-- Tradução da página-->
-        <script>
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement({ pageLanguage: 'pt', includedLanguages: 'en,pt' }, 'google_translate_element');
+    <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- Dropdown menu-->
+    <script>
+        $('.dropdown-menu').on({
+            "click": function (e) {
+                e.stopPropagation();
             }
-        </script>
-        <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-        <script>
-            var close = document.getElementsByClassName("fechar");
+        });
+    </script>
+    <!-- Menu hamburguer-->
+    <script>
 
-            var i;
-            for (i = 0; i < close.length; i++) {
-                close[i].onclick = function () {
-                    var div = this.parentElement;
-                    div.style.display = "none";
-                }
+        $(".hamburger").click(function () {
+            $(".wrapper").toggleClass("active")
+        })
+    </script>
+    <!-- Importação da biblioteca de icones FontAwesome-->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Tradução da página-->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'pt', includedLanguages: 'en,pt' }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        var close = document.getElementsByClassName("fechar");
+
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
             }
+        }
 
-        </script>
-        <!-- Timer -->
-        <script>
-            // Set the date we're counting down to
-            var countDownDate = new Date("Sep 30, 2020 23:59:00").getTime();
+    </script>
+    <!-- Timer -->
+    <script>
+        window.onload = function () {
 
-            // Update the count down every 1 second
-            var x = setInterval(function () {
+        }
 
-                // Get today's date and time
-                var now = new Date().getTime();
+        // Set the date we're counting down to
+        var countDownDate = new Date("2020-11-24T20:55:00Z").getTime();
 
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
+        // Update the count down every 1 second
+        var x = setInterval(function () {
 
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Get today's date and time
+            var now = new Date().getTime();
 
-                // Output the result in an element with id="timer"
-                document.getElementById("timer").innerHTML = hours + "h "
-                    + minutes + "m " + seconds + "s ";
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
 
-                // If the count down is over, write some text 
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("timer").innerHTML = "Prazo Atingido";
-                }
-            }, 1000);
-        </script>
-        <script>
-            var listElement = document.querySelector("#app ul");
-            var buttonElement = document.querySelector("#app button");
-            var inputElement = document.querySelector("#app input");
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            var todos = JSON.parse(localStorage.getItem("list_todos")) || [];
+            // Output the result in an element with id="timer"
+            document.getElementById("timer").innerHTML = hours + "h "
+                + minutes + "m " + seconds + "s ";
 
-            function renderizarTodos() {
-                listElement.innerHTML = "";
-
-                for (todo of todos) {
-                    var todoElement = document.createElement('li');
-                    var todoText = document.createTextNode(todo);
-
-                    var linkElement = document.createElement("a");
-                    linkElement.setAttribute("href", "#");
-                    linkElement.setAttribute("class", "btn btn-danger m-1");
-
-                    var pos = todos.indexOf(todo);
-                    linkElement.setAttribute("onclick", "removerTodo ( " + pos + ")");
-
-                    var linkText = document.createTextNode("Limpar");
-                    linkElement.appendChild(linkText);
-
-                    todoElement.appendChild(todoText);
-                    todoElement.appendChild(linkElement);
-
-                    listElement.appendChild(todoElement);
-                }
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "Prazo Atingido";
             }
+        }, 1000);
+    </script>
+    <script>
+        var listElement = document.querySelector("#app ul");
+        var buttonElement = document.querySelector("#app button");
+        var inputElement = document.querySelector("#app input");
 
+        var todos = JSON.parse(localStorage.getItem("list_todos")) || [];
+
+        function renderizarTodos() {
+            listElement.innerHTML = "";
+
+            for (todo of todos) {
+                var todoElement = document.createElement('li');
+                var todoText = document.createTextNode(todo);
+
+                var linkElement = document.createElement("a");
+                linkElement.setAttribute("href", "#");
+                linkElement.setAttribute("class", "btn btn-danger m-1");
+
+                var pos = todos.indexOf(todo);
+                linkElement.setAttribute("onclick", "removerTodo ( " + pos + ")");
+
+                var linkText = document.createTextNode("Limpar");
+                linkElement.appendChild(linkText);
+
+                todoElement.appendChild(todoText);
+                todoElement.appendChild(linkElement);
+
+                listElement.appendChild(todoElement);
+            }
+        }
+
+        renderizarTodos();
+
+        function adicionarTodos() {
+            var todoText = inputElement.value;
+            todos.push(todoText);
+            inputElement.value = "";
             renderizarTodos();
+            gravarStorage();
+        }
 
-            function adicionarTodos() {
-                var todoText = inputElement.value;
-                todos.push(todoText);
-                inputElement.value = "";
-                renderizarTodos();
-                gravarStorage();
-            }
+        buttonElement.onclick = function () {
+            if (inputElement.value == "")
+                alert("Valor inválido");
+            else
+                adicionarTodos();
+        }
 
-            buttonElement.onclick = function () {
-                if (inputElement.value == "")
-                    alert("Valor inválido");
-                else
-                    adicionarTodos();
-            }
+        function removerTodo(pos) {
+            todos.splice(pos, 1);
+            renderizarTodos();
+            gravarStorage();
+        }
 
-            function removerTodo(pos) {
-                todos.splice(pos, 1);
-                renderizarTodos();
-                gravarStorage();
-            }
+        function gravarStorage() {
+            localStorage.setItem("list_todos", JSON.stringify(todos));
+        }
 
-            function gravarStorage() {
-                localStorage.setItem("list_todos", JSON.stringify(todos));
-            }
-        </script>
-</body>
-
-</html>
-</script>
+        function logoff() {
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.assign('tela-inicial.html');
+        }
+    </script>
 </body>
 
 </html>

@@ -143,13 +143,36 @@
     <!-- Importação da biblioteca de icones FontAwesome-->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <!--Importação do Axios-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
-        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" crossorigin="anonymous"></script>
     <!--Importação do Axios-->
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <script>
+        var token = getCookie("token");
+
+        window.onload = () => {
+            if(document.cookie.indexOf('token=') !== -1){
+                window.location.assign('atividade.html');
+            }
+        }
+
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
         function handleLogin() {
             let data = {
                 email: document.getElementById('loginEmail').value.trim(),
@@ -157,22 +180,25 @@
             };
 
             console.log(data);
-            axios.post('https://alumnus-api.herokuapp.com/user/login', data)
-            .then(function (response) {
-                console.log(response.data);
+            axios.post('https://alumnus-api.herokuapp.com/login', data)
+                .then(function (response) {
+                    console.log(response.data);
 
-                if (response.data.status != 2) {
-                    Cookies.set('userId', response.idUsuario);
-                    alert("Usuário foi autenticado. Id de Usuário: " + response.data.idUsuario);
-                    // window.location.assign('tela-principal.html');
-                } else {
-                    alert("Usuário não foi autenticado, tente novamente");
-                }
-            });
+                    if (response.data.status != 2) {
+                        // Cookies.set('userId', response.idUsuario);
+                        let today = new Date();
+                        today.setHours(today.getHours() + 24);
+                        today = today.toString().split(" (Horário Padrão de Brasília)")[0];
+                        document.cookie = "token=" + response.data.accessToken + "; expires=" + today + "; path=/";
+                        window.location.assign('tela-principal.html');
+                    } else {
+                        alert("Usuário não foi autenticado, tente novamente");
+                    }
+                });
 
         }
 
-        function handleSignup (){
+        function handleSignup() {
             let data = {
                 email: document.getElementById('signupEmail').value.trim(),
                 nickname: document.getElementById('signupNickname').value.trim(),
@@ -181,17 +207,20 @@
             };
 
             console.log(data);
-            axios.post('https://alumnus-api.herokuapp.com/user/signup', data)
-            .then(function (response) {
-                console.log(response.data);
+            axios.post('https://alumnus-api.herokuapp.com/signup', data)
+                .then(function (response) {
+                    console.log(response.data);
 
-                if (response.data.status != 2) {
-                    alert("Usuário foi criado. Id de Usuário: " + response.data.idUsuario);
-                    // window.location.assign('tela-principal.html');
-                } else {
-                    alert("Usuário não foi criado. Motivo: " + response.data.mensagem);
-                }
-            });
+                    if (response.data.status == 1) {
+                        let today = new Date();
+                        today.setHours(today.getHours() + 24);
+                        today = today.toString().split(" (Horário Padrão de Brasília)")[0];
+                        document.cookie = "token=" + response.data.tokens.accessToken + "; expires=" + today + "; path=/";
+                        window.location.assign('tela-principal.html');
+                    } else {
+                        alert("Usuário não foi criado. Motivo: " + response.data.error);
+                    }
+                });
         }
 
     </script>

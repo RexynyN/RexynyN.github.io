@@ -27,8 +27,7 @@
             </div>
             <div class="top_menu">
                 <div>
-                    <a href="#" class="btn btn-danger">Sair
-                    </a>
+                    <button onclick="logoff()" class="btn btn-danger">Sair</button>
                 </div>
                 <div class="right_info">
                     <div class="dropdown show">
@@ -89,14 +88,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="cronograma.html">
                                 <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
                                 </span>
                                 <span class="list">Cronograma</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="publicacoes.html">
                                 <span class="icon"><i class="fas fa-quote-left fa-fw"></i>
                                 </span>
                                 <span class="list">Publicações</span>
@@ -129,10 +128,35 @@
             </div>
 
             <div class="container">
-                <h1 class="mt-5">Meu Perfil</h1>
+                <h1 class="mt-5">Perfil</h1>
                 <hr>
                 <div class="p-3 mt-2">
-                    WIP
+                    <div class="bg-light p-4 m-2 shadow border">
+                        <div class="form-row d-flex justify-content-center">
+                            <div class="form-group col-md-6">
+                                <label for="exampleFormControlInput1">Nickname:</label>
+                                <input type="text" class="form-control" id="nickname" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="exampleFormControlInput1">Pontuação Total:</label>
+                                <input type="text" class="form-control" id="pontuacao" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="exampleFormControlInput1">Com a gente desde:</label>
+                                <input type="text" class="form-control" id="criado-em" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Biografia</label>
+                            <textarea class="form-control" id="descricao" rows="2" readonly></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button onclick="editarPerfil()" id="editar" class="btn btn-success btn-lg"><i
+                                    class="fas fa-edit"></i> Editar Perfil</button>
+                            <button onclick="salvarPerfil()" id="salvar" class="btn btn-primary btn-lg" hidden><i
+                                    class="fas fa-save"></i> Salvar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -190,6 +214,8 @@
     </script>
     <!-- Importação da biblioteca de icones FontAwesome-->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" crossorigin="anonymous"></script>
+
     <!-- Tradução da página-->
     <script>
         function googleTranslateElementInit() {
@@ -199,6 +225,24 @@
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         var close = document.getElementsByClassName("fechar");
+        var token = getCookie("token");
+        var nickname = "";
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
 
         var i;
         for (i = 0; i < close.length; i++) {
@@ -206,6 +250,105 @@
                 var div = this.parentElement;
                 div.style.display = "none";
             }
+        }
+
+        window.onload = function () {
+
+            axios.get('https://alumnus-api.herokuapp.com/user/show/?self=true', { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+                    console.log(response.data);
+
+                    if (response.data.status == 3) {
+                        window.location.assign('login-e-cadastro.html');
+                    }
+
+                    if (response.data.status !== 2) {
+                        var dados = response.data.user;
+
+                        userId = dados.id;
+
+                        document.getElementById("nickname").value = dados.nickname;
+                        document.getElementById("descricao").value = dados.descricaoPerfil;
+                        document.getElementById("pontuacao").value = dados.pontuacao;
+
+                        var desde = new Date(dados.createdAt);
+                        desde = formataData(desde);
+                        document.getElementById("criado-em").value = desde;
+                    } else {
+                        alert("Houve um erro ao retornar as atividades.");
+                    }
+
+                });
+        }
+
+        function editarPerfil() {
+            document.getElementById("nickname").readOnly = false;
+            document.getElementById("descricao").readOnly = false;
+            document.getElementById("editar").hidden = true;
+            document.getElementById("salvar").hidden = false;
+            nickname = document.getElementById("nickname").value.trim();
+        }
+
+
+        function salvarPerfil() {
+            var newNickname = document.getElementById("nickname").value.trim();
+            var descricao = document.getElementById("descricao").value.trim();
+
+            if (descricao.length > 255) {
+                alert("A descrição não podem ultrapassar 255 caracteres");
+            } else {
+
+                let coisas;
+                if (newNickname != nickname) {
+                    coisas = {
+                        nickname,
+                        descricao
+                    }
+                } else {
+                    coisas = {
+                        descricao
+                    }
+                }
+
+                console.log(coisas);
+
+                axios.post('https://alumnus-api.herokuapp.com/user/edit', coisas, { headers: { 'Authorization': 'Bearer ' + token } })
+                    .then(function (response) {
+
+                        console.log(response.data);
+
+                        if (response.data.status == 1) {
+                            alert("Seu perfil foi editado!");
+                        } else {
+                            alert("Perfil não editado. Motivo: " + response.data.error);
+                        }
+
+                        document.getElementById("nickname").readOnly = true;
+                        document.getElementById("descricao").readOnly = true;
+                        document.getElementById("editar").hidden = false;
+                        document.getElementById("salvar").hidden = true;
+                    });
+            }
+        }
+
+
+
+        function formataData(n) {
+            var mm = n.getMonth() + 1;
+            var dd = n.getDate();
+            var hh = n.getHours() + 3;
+            var min = n.getMinutes();
+
+            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
+
+            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
+
+            return data + " " + time;
+        };
+
+        function logoff(){
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.assign('tela-inicial.html');
         }
 
     </script>

@@ -303,7 +303,7 @@
                                 <textarea class="form-control" id="textarea-recado" rows="3"></textarea>
                             </div>
                             <div class="btn-landing-page">
-                                <button class="btn-verde">Enviar <i class="fas fa-paper-plane"></i></button>
+                                <button class="btn-verde" onclick="EnviarEmail()">Enviaaar <i class="fas fa-paper-plane" ></i></button>
                             </div>
                         </form>
                     </div>
@@ -312,11 +312,11 @@
             <footer class="footer p-2">
                 <div class="container">
                     <div class="social-icons text-center">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/Alumnus-104729808139439" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com/Alumnus12709924" target="_blank"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fas fa-envelope"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UChy6ZnMiGcTSdUC29pF4t8A" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/alumnus__/" target="_blank"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </footer>
@@ -324,6 +324,15 @@
 
     </div>
 
+  <!-- Metodo e-mail -->
+    <script>
+        function EnviarEmail() {
+        let email = document.getElementById('inputEmail');
+        let nome = document.getElementById('inputNome');
+        let mensagem = document.getElementById('inputAssunto');
+
+        }
+    </script>
     <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

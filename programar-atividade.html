@@ -27,8 +27,7 @@
             </div>
             <div class="top_menu">
                 <div>
-                    <a href="#" class="btn btn-danger">Sair
-                    </a>
+                    <button onclick="logoff()" class="btn btn-danger">Sair</button>
                 </div>
                 <div class="right_info">
                     <div class="dropdown show">
@@ -89,14 +88,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="cronograma.html">
                                 <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
                                 </span>
                                 <span class="list">Cronograma</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="publicacoes.html">
                                 <span class="icon"><i class="fas fa-quote-left fa-fw"></i>
                                 </span>
                                 <span class="list">Publicações</span>
@@ -132,27 +131,42 @@
                 <h1 class="mt-5">Nova atividade</h1>
                 <hr>
                 <div class="p-3 mt-2">
-                    <form class="bg-light p-4 m-2 shadow border" action="fazendo-atividade.html">
+                    <div class="bg-light p-4 m-2 shadow border">
                         <div class="form-row d-flex justify-content-center">
                             <div class="form-group col-md-6">
                                 <label for="exampleFormControlInput1">Título da atividade:</label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1"
+                                <input type="text" class="form-control" id="titulo-atividade"
                                     placeholder="Título da atividade" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="example-time-input">Tempo de duração da atividade:</label>
-                                <input class="form-control" type="time" placeholder="13:45:00" id="example-time-input" required>
+                                <label for="exampleFormControlInput1">Agrupador da atividade:</label>
+                                <input type="text" class="form-control" id="agrupador-atividade"
+                                    placeholder="Matemática, Português, Física" required>
                             </div>
-                            
+                            <div class="form-group col-md-6">
+                                <label for="example-time-input">Data da atividade:</label>
+                                <input class="form-control" type="date" placeholder="13:45:00" id="data-atividade"
+                                    required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="example-time-input">Horário da atividade:</label>
+                                <input class="form-control" type="time" placeholder="13:45:00" id="data-tempo-atividade"
+                                    required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="example-time-input">Tempo de duração da atividade:</label>
+                                <input class="form-control" type="time" placeholder="13:45:00" id="tempo-atividade"
+                                    required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Descrição da atividade:</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+                            <textarea class="form-control" id="descricao-atividade" rows="10"></textarea>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success btn-lg">Cadastrar</button>
+                            <button onclick="enviarAtividade();" class="btn btn-success btn-lg">Cadastrar</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -210,6 +224,7 @@
     </script>
     <!-- Importação da biblioteca de icones FontAwesome-->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" crossorigin="anonymous"></script>
     <!-- Tradução da página-->
     <script>
         function googleTranslateElementInit() {
@@ -219,6 +234,7 @@
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         var close = document.getElementsByClassName("fechar");
+        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJyZW5vLnMubm9ndWVpcmFAaG90bWFpbC5jb20iLCJzZW5oYSI6ImJydW5vZ2FtZXIwMiIsIm5pY2tuYW1lIjoiUmV4eW55TiIsImlkIjoxLCJ0aXBvVXN1YXJpbyI6MSwiaWF0IjoxNjA2MTcxNjMwLCJleHAiOjE2MDYyNTgwMzB9.TTDsH1XuhhCI-1cnocfIR3SrYaoefn3Ly13djVPyh7o";
 
         var i;
         for (i = 0; i < close.length; i++) {
@@ -226,6 +242,49 @@
                 var div = this.parentElement;
                 div.style.display = "none";
             }
+        }
+
+        function enviarAtividade() {
+            var agrupador = document.getElementById("agrupador-atividade").value;
+            var titulo = document.getElementById("titulo-atividade").value;
+            var descricao = document.getElementById("descricao-atividade").value;
+            var tempoConclusao = document.getElementById("tempo-atividade").value;
+            var data = document.getElementById("data-atividade").value;
+            var time = document.getElementById("data-tempo-atividade").value;
+
+            var dataAtividade = data + "T" + time + "Z";
+
+            if(agrupador.length > 255 || descricao.length > 255){
+                alert("O agrupador e a descrição não podem ultrapassar 255 caracteres");
+            }else{
+
+            let coisas = {
+                agrupador,
+                titulo, 
+                descricao, 
+                tempoConclusao, 
+                dataAtividade
+            }
+
+            console.log(coisas);
+
+            axios.post('https://alumnus-api.herokuapp.com/activity/create', coisas, { headers: { 'Authorization': 'Bearer '+ token }})
+            .then(function (response) {
+
+                console.log(response.data);
+
+                if (response.data.status != 2) {
+                    window.location.assign('atividade.html');
+                } else {
+                    alert("Atividade não criada. Motivo: " + response.data.error);
+                }
+            });
+            }
+        }
+
+        function logoff(){
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.assign('tela-inicial.html');
         }
 
     </script>
