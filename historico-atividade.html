@@ -138,14 +138,13 @@
                         <thead>
                             <tr>
                                 <th>Título</th>
-                                <th>Tempo Decorrido</th>
                                 <th>Data</th>
+                                <th>Agrupador</th>
                                 <th>Pontos</th>
-                                <th>
-                                </th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <!-- <tbody>
                             <tr>
                                 <td>Estudar SIN</td>
                                 <td>1h30</td>
@@ -153,10 +152,11 @@
                                 <td>20</td>
                                 <td class="text-center">
                                     <a href="#" title="Ver detalhes da atividade"><i class="fas fa-eye fa-fw fa-lg"></i></a>
-                                    <a href="#" title="Ver somente anotações"><i class="fas fa-book-open fa-fw fa-lg"></i></a>
-                                    <a href="#" title="Excluir do histórico"><i class="fas fa-trash fa-fw fa-lg"></i></a>
                                 </td>
                             </tr>
+                        </tbody> -->
+                        <tbody id="table-content">
+                           
                         </tbody>
                     </table>
                 </div>
@@ -238,56 +238,83 @@
     <!-- datatable-->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Importação axios-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+    integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+    crossorigin="anonymous"></script>
+    <!-- Ranking-->
     <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                language: {
-                    "sEmptyTable": "Nenhum registro encontrado",
-                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ".",
-                    "sLengthMenu": "_MENU_ resultados por página",
-                    "sLoadingRecords": "Carregando...",
-                    "sProcessing": "Processando...",
-                    "sZeroRecords": "Nenhum registro encontrado",
-                    "sSearch": "Pesquisar",
-                    "oPaginate": {
-                        "sNext": "Próximo",
-                        "sPrevious": "Anterior",
-                        "sFirst": "Primeiro",
-                        "sLast": "Último"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Ordenar colunas de forma ascendente",
-                        "sSortDescending": ": Ordenar colunas de forma descendente"
-                    },
-                    "select": {
-                        "rows": {
-                            "_": "Selecionado %d linhas",
-                            "0": "Nenhuma linha selecionada",
-                            "1": "Selecionado 1 linha"
-                        }
-                    },
-                    "buttons": {
-                        "copy": "Copiar para a área de transferência",
-                        "copyTitle": "Cópia bem sucedida",
-                        "copySuccess": {
-                            "1": "Uma linha copiada com sucesso",
-                            "_": "%d linhas copiadas com sucesso"
-                        }
-                    }
-                },
-                responsive: true
-            });
-        });
+        var token = getCookie("token");
 
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        window.onload = () => { 
+            let table = document.getElementById("table-content");
+            axios.get('https://alumnus-api.herokuapp.com/activity/list?limit=100&page=1&history=true',{ headers: { 'Authorization': 'Bearer ' + token } }).then(function (response) {
+                // console.log(response.data)
+                // th>Título</th>
+                //                 <th>Tempo Decorrido</th>
+                //                 <th>Data</th>
+                //                 <th>Pontos</th>
+                    let atividades = response.data.activities;
+                    console.log(atividades)
+
+                    if(atividades.length > 0){
+                    for (var i = 0; i < atividades.length; i++) {
+                        let htmlComponents = "<td>" + atividades[i].titulo + "</td>";
+                        let d = new Date(atividades[i].dataAtividade);
+                            htmlComponents += "<td>" + formataData(d) + "</td>";
+                        htmlComponents += "<td>" + atividades[i].agrupador + "</td>";
+                        htmlComponents += "<td>" + atividades[i].pontos + "</td>";
+                        htmlComponents += "<td class='text-center'><a href='ver-atividade.html?activityId="+atividades[i].id+"' title='Ver Atividade'><i class='fas fa-eye fa-fw fa-lg'></i></a></td>";
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = htmlComponents;
+                        table.appendChild(tr);
+                    }
+                    }else{
+                        let htmlComponents = "<td>" + "Nenhum registro foi encontrado" + "</td>"; 
+                        htmlComponents += "<td>" + "  " + "</td>"; 
+                        htmlComponents += "<td>" + "  " + "</td>"; 
+                        htmlComponents += "<td>" + "  " + "</td>";  
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = htmlComponents;
+                        table.appendChild(tr);
+                    }
+                });
+        }
+ 
+        function formataData(n) {
+            var mm = n.getMonth() + 1;
+            var dd = n.getDate();
+            var hh = n.getHours() + 3;
+            var min = n.getMinutes();
+
+            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
+
+            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
+
+            return data + " " + time;
+        };
 
         function logoff(){
-            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.assign('tela-inicial.html');
-        }
+             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+             window.location.assign('tela-inicial.html');
+         }
+            
     </script>
 </body>
 

@@ -131,6 +131,7 @@
 
             <div class="container">
                 <h1 class="mt-5">Ranking Semanal</h1>
+                <h5>Ranking dos 10 alunos com as melhores pontuações da semana!</h5>
                 <hr>
                 <div class="p-3 mt-2">
                     <div class="row d-flex justify-content-around align-items-center">
@@ -250,9 +251,18 @@
                        let htmlComponents = "<td>" + (i+1) + "</td>";
                        htmlComponents += "<td>" + rank[i].nickname + "</td>";
                        htmlComponents += "<td>" + rank[i].pontuacao + "</td>";
-                       let tr = document.createElement("tr");
+                       let tr = document.createElement("div");
+                       tr.style.padding = "23px";
+                       tr.style.fontSize = "321px";
                        tr.innerHTML = htmlComponents;
                        table.appendChild(tr);
+                        
+
+//                        <div class="container">
+//                        <img src="/w3images/bandmember.jpg" alt="Avatar">
+//                        <p>Hello. How are you today?</p>
+//                        <span class="time-right">11:00</span>
+//                        </div>
                    }
                });
        }

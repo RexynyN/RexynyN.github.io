@@ -130,12 +130,12 @@
 
             <div class="container">
                 <h1 class="mt-5">Fazendo Atividade</h1>
-                <h5 class="font-italic">Atividade0001</h5>
+                <h5 class="font-italic" id="descricao"></h5>
                 <hr>
                 <div class="p-3 mt-2 bg-light shadow border">
                     <div>
                         <div class="text-center m-2 p-2">
-                            <h3 class="font-italic font-weight-bold">Atividade0001</h3>
+                            <h3 class="font-italic font-weight-bold" id="titulo"></h3>
                         </div>
                         <div class="row mx-3">
                             <div class="col-12 col-md-6 my-2">
@@ -157,9 +157,14 @@
                         </div>
                         <div class="text-center m-2 p-2">
                             <h3 id="timer" class="font-weight-bold"></h3>
-                            <button type="submit" class="btn btn-success btn-lg">Finalizar</button>
+                            <button onclick="cancelarAtividade()" class="btn btn-danger btn-lg">Cancelar
+                                Atividade</button>
+                            <button onclick="finalizarAtividade()" class="btn btn-success btn-lg">Finalizar
+                                Atividade</button>
                         </div>
                     </div>
+
+                    <input type="time" id="tempo-cumprido" hidden>
 
                 </div>
             </div>
@@ -191,6 +196,8 @@
         </div>
     </div>
 
+
+
     <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -218,6 +225,8 @@
     </script>
     <!-- Importação da biblioteca de icones FontAwesome-->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" crossorigin="anonymous"></script>
+
     <!-- Tradução da página-->
     <script>
         function googleTranslateElementInit() {
@@ -240,7 +249,9 @@
     <!-- Timer -->
     <script>
         var token = getCookie("token");
-        var activityId;
+        var activity;
+        var horasRest = 0;
+        var minRest = 0;
 
         function getCookie(cname) {
             var name = cname + "=";
@@ -272,19 +283,56 @@
                     }
 
                     if (response.data.status !== 2) {
-                        var dados = response.data.response;
+                        activity = response.data.response;
 
-                        document.getElementById("agrupador-atividade").value = dados.agrupador;
-                        document.getElementById("titulo-atividade").value = dados.titulo;
-                        document.getElementById("descricao-atividade").value = dados.descricao;
-                        document.getElementById("tempo-atividade").value = dados.tempoPrevisto;
+                        document.getElementById("descricao").innerHTML = activity.descricao;
+                        document.getElementById("titulo").innerHTML = activity.titulo;
 
-                        var data = dados.dataAtividade.split("T")[0];
-                        var time = dados.dataAtividade.split("T")[1];
 
-                        time = time.split(":00.000Z")[0];
-                        document.getElementById("data-atividade").value = data;
-                        document.getElementById("data-tempo-atividade").value = time;
+                        var endDate = new Date();
+                        var hourMin = [];
+                        var checkH = JSON.parse(localStorage.getItem("hours"));
+                        var checkM = JSON.parse(localStorage.getItem("minutes"));
+
+                        console.log(checkH + " " + checkM)
+
+                        if (checkH >= 0 && checkM >= 0) {
+                            hourMin[0] = checkH;
+                            hourMin[1] = checkM;
+                        } else {
+                            hourMin = activity.tempoPrevisto.split(":");
+                        }
+
+                        endDate.setHours(endDate.getHours() + (Number(hourMin[0] - 3)));
+                        endDate.setMinutes(endDate.getMinutes() + Number(hourMin[1]));
+                        var countDownDate = endDate.getTime();
+
+                        var x = setInterval(function () {
+
+                            var now = new Date();
+                            now.setHours(now.getHours() - 3);
+                            now = now.getTime();
+
+                            var distance = countDownDate - now;
+
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                            document.getElementById("timer").innerHTML = hours + "h "
+                                + minutes + "m " + seconds + "s ";
+
+                            localStorage.setItem("hours", JSON.stringify(hours));
+                            localStorage.setItem("minutes", JSON.stringify(minutes)); minutes;
+
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("timer").innerHTML = "Prazo Atingido";
+                            }
+                        }, 1000);
+
+
                     } else {
                         alert("Houve um erro ao retornar as atividades.");
                     }
@@ -292,34 +340,8 @@
                 });
         }
 
-        // Set the date we're counting down to
-        var countDownDate = new Date("2020-11-24T20:55:00Z").getTime();
 
-        // Update the count down every 1 second
-        var x = setInterval(function () {
 
-            // Get today's date and time
-            var now = new Date().getTime();
-
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
-
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Output the result in an element with id="timer"
-            document.getElementById("timer").innerHTML = hours + "h "
-                + minutes + "m " + seconds + "s ";
-
-            // If the count down is over, write some text 
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("timer").innerHTML = "Prazo Atingido";
-            }
-        }, 1000);
     </script>
     <script>
         var listElement = document.querySelector("#app ul");
@@ -327,6 +349,7 @@
         var inputElement = document.querySelector("#app input");
 
         var todos = JSON.parse(localStorage.getItem("list_todos")) || [];
+        var ids = JSON.parse(localStorage.getItem("ids")) || [];
 
         function renderizarTodos() {
             listElement.innerHTML = "";
@@ -337,12 +360,14 @@
 
                 var linkElement = document.createElement("a");
                 linkElement.setAttribute("href", "#");
-                linkElement.setAttribute("class", "btn btn-danger m-1");
+                linkElement.setAttribute("class", "btn btn-success m-1");
+
 
                 var pos = todos.indexOf(todo);
-                linkElement.setAttribute("onclick", "removerTodo ( " + pos + ")");
+                linkElement.setAttribute("id", pos);
+                linkElement.setAttribute("onclick", "concluirMeta ( " + pos + ")");
 
-                var linkText = document.createTextNode("Limpar");
+                var linkText = document.createTextNode("Terminei!");
                 linkElement.appendChild(linkText);
 
                 todoElement.appendChild(todoText);
@@ -355,11 +380,27 @@
         renderizarTodos();
 
         function adicionarTodos() {
-            var todoText = inputElement.value;
-            todos.push(todoText);
-            inputElement.value = "";
-            renderizarTodos();
-            gravarStorage();
+            var descricao = inputElement.value;
+
+            let campos = {
+                idAtividade: activity.id,
+                descricao
+            }
+            axios.post('https://alumnus-api.herokuapp.com/meta/create', campos, { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+
+                    console.log(response.data);
+
+                    if (response.data.status != 2) {
+                        todos.push(descricao);
+                        ids.push(response.data.meta.id)
+                        inputElement.value = "";
+                        renderizarTodos();
+                        gravarStorage();
+                    } else {
+                        alert("Meta não foi criada. Motivo: " + response.data.error);
+                    }
+                });
         }
 
         buttonElement.onclick = function () {
@@ -369,20 +410,101 @@
                 adicionarTodos();
         }
 
-        function removerTodo(pos) {
-            todos.splice(pos, 1);
-            renderizarTodos();
-            gravarStorage();
+        function concluirMeta(pos) {
+            let campos = {
+                idAtividade: activity.id,
+                ids: [ids[pos]],
+                situacoes: [2]
+            }
+
+            axios.post('https://alumnus-api.herokuapp.com/meta/close', campos, { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+
+                    console.log(response.data);
+
+                    if (response.data.status != 2) {
+                        document.getElementById(pos).hidden = true;
+                    } else {
+                        alert("Meta não foi criada. Motivo: " + response.data.error);
+                    }
+                });
         }
 
         function gravarStorage() {
             localStorage.setItem("list_todos", JSON.stringify(todos));
+            localStorage.setItem("ids", JSON.stringify(ids));
         }
 
         function logoff() {
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.assign('tela-inicial.html');
         }
+    </script>
+    <script>
+
+        function finalizarAtividade() {
+            var hh = JSON.parse(localStorage.getItem("hours"));
+            var mm = JSON.parse(localStorage.getItem("minutes"));
+
+            let previsto = new Date(activity.dataAtividade);
+            let hourMin = activity.tempoPrevisto.split(":");
+            previsto.setHours(previsto.getHours() + Number(hourMin[0]));
+            previsto.setMinutes(previsto.getMinutes() + Number(hourMin[1]));
+
+            let real = new Date(activity.dataAtividade);
+            real.setHours(real.getHours() + Number(hh));
+            real.setMinutes(real.getMinutes() + Number(mm));
+
+            var diffMs = (previsto - real); 
+            var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+            var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+            
+            
+            let campos = {
+                id: activity.id,
+                tempoCumprido: diffHrs + ":" + diffMins
+            }
+            
+            axios.post('https://alumnus-api.herokuapp.com/activity/close', campos, { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+
+                    console.log(response.data);
+
+                    if (response.data.status == 1) {
+                        localStorage.removeItem('list_todos');
+                        localStorage.removeItem('ids');
+                        localStorage.removeItem('hours');
+                        localStorage.removeItem('minutes');
+                        window.location.assign('atividade.html');
+                    } else {
+                        alert("Não foi possível cancelar a atividade. Motivo: " + response.data.error);
+                    }
+                });
+        }
+
+        function cancelarAtividade() {
+            let campos = {
+                id: activity.id,
+            }
+
+            axios.post('https://alumnus-api.herokuapp.com/activity/cancel', campos, { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+
+                    console.log(response.data);
+
+                    if (response.data.status != 2) {
+                        localStorage.removeItem('list_todos');
+                        localStorage.removeItem('ids');
+                        localStorage.removeItem('hours');
+                        localStorage.removeItem('minutes');
+                        window.location.assign('atividade.html');
+                    } else {
+                        alert("Não foi possível cancelar a atividade. Motivo: " + response.data.error);
+                    }
+                });
+        }
+
+
     </script>
 </body>
 

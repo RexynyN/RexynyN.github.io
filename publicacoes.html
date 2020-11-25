@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../css/global.css">
     <!-- Folha(s) de estilos específica(s) -->
     <link rel="stylesheet" href="../css/atividade.css">
+    <!-- Folha(s) de estilos específica(s) -->
+    <link rel="stylesheet" href="../css/publicacoes.css">
 </head>
 
 <body>
@@ -127,26 +129,67 @@
                 </div>
             </div>
 
-            <div class="container">
-                <h1 class="mt-5">Publicações</h1>
-            <h5>Aqu!</h5>
-                <hr>
-                <hr>
-                <div class="p-3 mt-2">
+            <div class="container">               
+                <h1 class="mt-5">Publicações dos Usuários</h1>
+                <div style="float:right;">         
+                    <a data-toggle="modal" data-target="#create-pub">
+                        <div class="icon_wrap">
+                            <div class="icon">
+                                <button class="btn btn-success">Nova Publicação</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <h5>Aqui é possível realizar integir com outro usuarios do Alumnus</h5> 
+                <br>  
+                <hr><hr>
+                <div class="p-3 mt-2" style="max-width:100%">
+                    <div class="publi-container" id="publi" >
+                    </div>
+
+                    <!-- <button onclick="teste()">Try it</button>
                     <table id="example" class="table table-striped table-bordered" style="max-width:100%">
                         <thead>
                             <tr>
                                 <th>Titulo</th>
-                                <th>Descrição</th>
-                                <th>Data de Atividade</th>
-                                <th>Agrupador</th>
+                                <th>Conteudo</th>
+                                <th>Data da publicação</th>
                             </tr>
                         </thead>
                         <tbody id="table-content">
-                           
+
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="create-pub" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title">Nova Publicação</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="exampleFormControlInput1">Titulo da Publicação:</label>
+                    <input type="text" placeholder="Titulo da publicação" class="form-control" id="titulo" required>
+                    <br>
+                    <label for="exampleFormControlInput1">Publicação</label>
+                    <small> (Máximo de 250 caracteres):</small>
+                    <textarea laceholder="O que esta acontecendo?" class="form-control" id="publicacao" required
+                        rows="6" maxlength="250"></textarea>
+                    <br>
+                    <div style="text-align: center;">
+                        <button onclick="createPub()" class="btn btn-success">Publicar</button>
+                    </div>
+                </div>
+                <hr>
             </div>
         </div>
     </div>
@@ -218,7 +261,7 @@
 
         function getCookie(cname) {
             var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);    
+            var decodedCookie = decodeURIComponent(document.cookie);
             var ca = decodedCookie.split(';');
             for (var i = 0; i < ca.length; i++) {
                 var c = ca[i];
@@ -240,28 +283,58 @@
             }
         }
 
+        function createPub() {
 
-        window.onload = () => {
+            conteudo = document.getElementById('publicacao').value;
 
-            let table = document.getElementById("table-content");
+            if (conteudo.length > 255) {
+                alert("O conteúdo não pode passar de 255 caracteres");
+            }
 
-            axios.get('https://alumnus-api.herokuapp.com/activity/list?limit=1000&page=1', { headers: { 'Authorization': 'Bearer ' + token } })
+            let campos = {
+                titulo: document.getElementById('titulo').value,
+                conteudo: document.getElementById('publicacao').value
+            }
+            console.log(campos)
+            axios.post('https://alumnus-api.herokuapp.com/post/create', campos, { headers: { 'Authorization': 'Bearer ' + token } })
                 .then(function (response) {
                     console.log(response.data);
 
-                    if(response.data.status == 3){
+                    if (response.data.status != 2) {
+                        //Lógica
+                        var pub = response.data.pub;
+
+                    } else {
+                        alert("Publicação não foi criada. Motivo: " + response.data.error);
+                    }
+
+                    if (response.data.status == 1) {
+                        getPubliList();
+                        document.getElementById("publi").innerHTML = "";
+                        $("#create-pub").modal('hide');
+                    }
+                });
+        }
+
+        function getPubliList2() {
+            let table = document.getElementById("table-content");
+            console.log(table)
+            axios.get('https://alumnus-api.herokuapp.com/post/feed/?limit=1000&page=1', { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+                    console.log(response.data);
+
+                    if (response.data.status == 3) {
                         window.location.assign('login-e-cadastro.html');
                     }
 
                     if (response.data.status == 1) {
-                        let atvs = response.data.activities;
+                        let pubs = response.data.pubs;
 
-                        for (var i = 0; i < atvs.length; i++) {
-                            let htmlComponents = "<td><a href='fazendo-atividade.html?activityId="+atvs[i].id+"'>" + atvs[i].titulo + "</a></td>";
-                            htmlComponents += "<td>" + atvs[i].descricao + "</td>";
-                            let d = new Date(atvs[i].dataAtividade);
+                        for (var i = 0; i < pubs.length; i++) {
+                            let htmlComponents = "<td>" + pubs[i].titulo + "</td>";
+                            htmlComponents += "<td>" + pubs[i].conteudo + "</td>";
+                            let d = new Date(pubs[i].createdAt);
                             htmlComponents += "<td>" + formataData(d) + "</td>";
-                            htmlComponents += "<td>" + atvs[i].agrupador + "</td>";
                             let tr = document.createElement("tr");
                             tr.innerHTML = htmlComponents;
                             table.appendChild(tr);
@@ -273,49 +346,43 @@
                 });
         }
 
-        function formataData(n) {
-            var mm = n.getMonth() + 1;
-            var dd = n.getDate();
-            var hh = n.getHours() + 3;
-            var min = n.getMinutes();
+        function getPubliList() {
+            axios.get('https://alumnus-api.herokuapp.com/post/feed/?limit=1000&page=1', { headers: { 'Authorization': 'Bearer ' + token } }).then(function (response) {
+                console.log(response.data);
 
-            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
+                if (response.data.status == 3) {
+                    window.location.assign('login-e-cadastro.html');
+                }
 
-            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
+                if (response.data.status == 1) {
+                    let pubs = response.data.pubs;
 
-            return data + " " + time;
-        };
+                    for (var i = 0; i < pubs.length; i++) {
+                        let nickName = pubs[i].usuario.nickname;
+                        
+                        let publicação = nickName+" - " + pubs[i].titulo + "\t" + pubs[i].conteudo + "\n";
+                        var node = document.createElement("LI");
+                        var textnode = document.createTextNode(publicação);
+                        node.appendChild(textnode);
+                        document.getElementById("publi").appendChild(node);
+                    }
+
+                } else if (response.data.status == 2) {
+                    alert("Houve um erro ao retornar as atividades.");
+                }
+            });
+        }
+
+        // Open modal on page load
+        $("#myModal").modal('show');
+
+        // Close modal on button click
+        $("#myModal").modal('hide');
 
 
-
-        function formataData(n) {
-            var mm = n.getMonth() + 1;
-            var dd = n.getDate();
-            var hh = n.getHours() + 3;
-            var min = n.getMinutes();
-
-            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
-
-            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
-
-            return data + " " + time;
-        };
-
-
-
-        function formataData(n) {
-            var mm = n.getMonth() + 1;
-            var dd = n.getDate();
-            var hh = n.getHours() + 3;
-            var min = n.getMinutes();
-
-            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
-
-            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
-
-            return data + " " + time;
-        };
-
+        window.onload = () => {
+            getPubliList();
+        }
 
 
         function formataData(n) {
@@ -332,7 +399,7 @@
         };
 
 
-        function logoff(){
+        function logoff() {
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.assign('tela-inicial.html');
         }

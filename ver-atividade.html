@@ -128,7 +128,7 @@
             </div>
 
             <div class="container">
-                <h1 class="mt-5">Deletar Atividade</h1>
+                <h1 class="mt-5">Visualizar Atividade</h1>
                 <hr>
                 <div class="p-3 mt-2">
                     <div class="bg-light p-4 m-2 shadow border">
@@ -146,7 +146,7 @@
                             <div class="form-group col-md-6">
                                 <label for="example-time-input">Data da atividade:</label>
                                 <input class="form-control" type="date" placeholder="13:45:00" id="data-atividade"
-                                readonly required>
+                                   readonly required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="example-time-input">Horário da atividade:</label>
@@ -156,16 +156,29 @@
                             <div class="form-group col-md-6">
                                 <label for="example-time-input">Tempo de duração da atividade:</label>
                                 <input class="form-control" type="time" placeholder="13:45:00" id="tempo-atividade"
-                                readonly required>
+                                readonly  required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="example-time-input">Tempo utilizado para terminar atividade:</label>
+                                <input class="form-control" type="time" placeholder="13:45:00" id="tempo-cumprido"
+                                readonly  required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="example-time-input">Pontos Ganhos:</label>
+                                <input class="form-control" type="text" id="pontos"
+                                readonly  required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Descrição da atividade:</label>
                             <textarea class="form-control" id="descricao-atividade" rows="2" readonly></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Anotações:</label>
+                            <textarea class="form-control" id="anotacao" rows="2" readonly></textarea>
+                        </div>
                         <div class="text-center">
-                            <button onclick="redirect();" class="btn btn-success btn-lg">Cancelar</button>
-                            <button onclick="deletarAtividade();" class="btn btn-danger btn-lg">Deletar</button>
+                            <a href="atividade.html" class="btn btn-primary btn-lg">Voltar</a>
                         </div>
                     </div>
                 </div>
@@ -236,11 +249,11 @@
     <script>
         var close = document.getElementsByClassName("fechar");
         var token = getCookie("token");
-        let activityId;
+        var activityId;
 
         function getCookie(cname) {
             var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);    
+            var decodedCookie = decodeURIComponent(document.cookie);
             var ca = decodedCookie.split(';');
             for (var i = 0; i < ca.length; i++) {
                 var c = ca[i];
@@ -263,18 +276,15 @@
         }
 
         window.onload = function () {
-            let table = document.getElementById("table-content");
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             activityId = urlParams.get('activityId');
-
-            console.log(activityId);
 
             axios.get('https://alumnus-api.herokuapp.com/activity/show/' + activityId, { headers: { 'Authorization': 'Bearer ' + token } })
                 .then(function (response) {
                     console.log(response.data);
 
-                    if(response.data.status == 3){
+                    if (response.data.status == 3) {
                         window.location.assign('login-e-cadastro.html');
                     }
 
@@ -292,6 +302,11 @@
                         time = time.split(":00.000Z")[0];
                         document.getElementById("data-atividade").value = data;
                         document.getElementById("data-tempo-atividade").value = time;
+                        document.getElementById("tempo-cumprido").value = dados.tempoCumprido;
+                        document.getElementById("anotacao").value = dados.anotacao;
+                        document.getElementById("pontos").value = dados.pontos;
+
+
                     } else {
                         alert("Houve um erro ao retornar as atividades.");
                     }
@@ -300,29 +315,46 @@
         }
 
 
-        function deletarAtividade() {
-                console.log(token)
+        function enviarAtividade() {
+            var agrupador = document.getElementById("agrupador-atividade").value;
+            var titulo = document.getElementById("titulo-atividade").value;
+            var descricao = document.getElementById("descricao-atividade").value;
+            var tempoConclusao = document.getElementById("tempo-atividade").value;
+            var data = document.getElementById("data-atividade").value;
+            var time = document.getElementById("data-tempo-atividade").value;
 
-                axios.post('https://alumnus-api.herokuapp.com/activity/delete/'+ activityId, null ,{ headers: { 'Authorization': 'Bearer ' + token } })
+            var dataAtividade = data + "T" + time + "Z";
+
+            if (agrupador.length > 255 || descricao.length > 255) {
+                alert("O agrupador e a descrição não podem ultrapassar 255 caracteres");
+            } else {
+
+                let coisas = {
+                    id: activityId,
+                    agrupador,
+                    titulo,
+                    descricao,
+                    tempoConclusao,
+                    dataAtividade
+                }
+
+                console.log(coisas);
+
+                axios.post('https://alumnus-api.herokuapp.com/activity/edit/', coisas, { headers: { 'Authorization': 'Bearer ' + token, 'Access-Control-Allow-Origin': '*' } })
                     .then(function (response) {
 
                         console.log(response.data);
 
-                        if (response.data.status == 1) {
-                            alert("Atividade deletada!");
+                        if (response.data.status != 2) {
                             window.location.assign('atividade.html');
                         } else {
-                            alert("Não foi possível deletar a atividade. Motivo: " + response.data.error);
+                            alert("Atividade não editada. Motivo: " + response.data.error);
                         }
                     });
-            
+            }
         }
 
-        function redirect(){
-            window.location.assign('atividade.html');
-        }
-
-        function logoff(){
+        function logoff() {
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.assign('tela-inicial.html');
         }

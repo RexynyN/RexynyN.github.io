@@ -148,7 +148,7 @@
                                 <th>Descrição</th>
                                 <th>Data de Atividade</th>
                                 <th>Agrupador</th>
-                                <th></th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody id="table-content">
@@ -168,6 +168,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Modal Notificações-->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
@@ -193,6 +194,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -265,7 +267,7 @@
 
             axios.get('https://alumnus-api.herokuapp.com/activity/list?limit=1000&page=1', { headers: { 'Authorization': 'Bearer ' + token } })
                 .then(function (response) {
-                    console.log(response.data);
+                    console.log(token); 
 
                     if(response.data.status == 3){
                         window.location.assign('login-e-cadastro.html');
@@ -281,12 +283,11 @@
                             htmlComponents += "<td>" + formataData(d) + "</td>";
                             htmlComponents += "<td>" + atvs[i].agrupador + "</td>";
                             htmlComponents += "<td class='text-center'><a href='editar-atividade.html?activityId="+atvs[i].id+"' title='Editar Atividade'><i class='fas fa-edit fa-fw fa-lg'></i></a>"+
-                            "<a href='apagar-atividade.html?activityId="+atvs[i].id+"' title='Ver somente anotações'><i class='fas fa-trash fa-fw fa-lg'></i></a></td>";
+                            "<a href='apagar-atividade.html?activityId="+atvs[i].id+"' title='Apagar atividade'><i class='fas fa-trash fa-fw fa-lg'></i></a></td>";
                             let tr = document.createElement("tr");
                             tr.innerHTML = htmlComponents;
                             table.appendChild(tr);
                         }
-
                     } else if (response.data.status == 2) {
                         alert("Houve um erro ao retornar as atividades.");
                     }
