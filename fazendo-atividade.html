@@ -77,7 +77,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-roxo ml-4 shadow">
                                     <a class="dropdown-item" href="atividade.html">Menu - Atividades</a>
-                                    <a class="dropdown-item" href="programar-atividade.html">Fazer atividade agora</a>
+                                    <a class="dropdown-item" href="programar-atividade.html">Nova atividade</a>
                                     <a class="dropdown-item" href="historico-atividade.html">Histórico</a>
                                 </div>
                             </div>
@@ -296,7 +296,7 @@
 
                         console.log(checkH + " " + checkM)
 
-                        if (checkH >= 0 && checkM >= 0) {
+                        if (checkH >= 0 && checkM >= 0 && checkH != null && checkM != null) {
                             hourMin[0] = checkH;
                             hourMin[1] = checkM;
                         } else {
@@ -308,7 +308,6 @@
                         var countDownDate = endDate.getTime();
 
                         var x = setInterval(function () {
-
                             var now = new Date();
                             now.setHours(now.getHours() - 3);
                             now = now.getTime();
@@ -327,7 +326,6 @@
                             localStorage.setItem("minutes", JSON.stringify(minutes)); minutes;
 
                             if (distance < 0) {
-                                clearInterval(x);
                                 document.getElementById("timer").innerHTML = "Prazo Atingido";
                             }
                         }, 1000);
@@ -445,6 +443,7 @@
         function finalizarAtividade() {
             var hh = JSON.parse(localStorage.getItem("hours"));
             var mm = JSON.parse(localStorage.getItem("minutes"));
+            var anotacao = document.getElementById('').value;
 
             let previsto = new Date(activity.dataAtividade);
             let hourMin = activity.tempoPrevisto.split(":");
@@ -463,6 +462,7 @@
             let campos = {
                 id: activity.id,
                 tempoCumprido: diffHrs + ":" + diffMins
+                anotacao
             }
             
             axios.post('https://alumnus-api.herokuapp.com/activity/close', campos, { headers: { 'Authorization': 'Bearer ' + token } })

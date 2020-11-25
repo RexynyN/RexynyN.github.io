@@ -76,7 +76,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-roxo ml-4 shadow">
                                     <a class="dropdown-item" href="atividade.html">Menu - Atividades</a>
-                                    <a class="dropdown-item" href="programar-atividade.html">Fazer atividade agora</a>
+                                    <a class="dropdown-item" href="programar-atividade.html">Nova atividade</a>
                                     <a class="dropdown-item" href="historico-atividade.html">Histórico</a>
                                 </div>
                             </div>
@@ -327,7 +327,7 @@
 
                         console.log(response.data);
 
-                        if (response.data.status != 2) {
+                        if (response.data.status == 1) {
                             window.location.assign('atividade.html');
                         } else {
                             alert("Atividade não editada. Motivo: " + response.data.error);

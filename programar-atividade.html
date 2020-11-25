@@ -76,7 +76,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-roxo ml-4 shadow">
                                     <a class="dropdown-item" href="atividade.html">Menu - Atividades</a>
-                                    <a class="dropdown-item" href="programar-atividade.html">Fazer atividade agora</a>
+                                    <a class="dropdown-item" href="programar-atividade.html">Nova atividade</a>
                                     <a class="dropdown-item" href="historico-atividade.html">Histórico</a>
                                 </div>
                             </div>
@@ -129,6 +129,7 @@
 
             <div class="container">
                 <h1 class="mt-5">Nova atividade</h1>
+                <h5>Cadastre uma nova atividade, e a confira na aba de cronograma!</h5>
                 <hr>
                 <div class="p-3 mt-2">
                     <div class="bg-light p-4 m-2 shadow border">
@@ -234,7 +235,23 @@
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         var close = document.getElementsByClassName("fechar");
-        var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJyZW5vLnMubm9ndWVpcmFAaG90bWFpbC5jb20iLCJzZW5oYSI6ImJydW5vZ2FtZXIwMiIsIm5pY2tuYW1lIjoiUmV4eW55TiIsImlkIjoxLCJ0aXBvVXN1YXJpbyI6MSwiaWF0IjoxNjA2MTcxNjMwLCJleHAiOjE2MDYyNTgwMzB9.TTDsH1XuhhCI-1cnocfIR3SrYaoefn3Ly13djVPyh7o";
+        var token = getCookie("token");
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
 
         var i;
         for (i = 0; i < close.length; i++) {
@@ -252,38 +269,43 @@
             var data = document.getElementById("data-atividade").value;
             var time = document.getElementById("data-tempo-atividade").value;
 
-            var dataAtividade = data + "T" + time + "Z";
             
+            var dataAtividade = data + "T" + time + "Z";
 
-            if(agrupador.length > 255 || descricao.length > 255){
+
+            if (agrupador.length > 255 || descricao.length > 255) {
                 alert("O agrupador e a descrição não podem ultrapassar 255 caracteres");
-            }else{
+            } else {
 
-            let coisas = {
-                agrupador,
-                titulo, 
-                descricao, 
-                tempoConclusao, 
-                dataAtividade
-            }
-
-            console.log(coisas);
-
-            axios.post('https://alumnus-api.herokuapp.com/activity/create', coisas, { headers: { 'Authorization': 'Bearer '+ token }})
-            .then(function (response) {
-
-                console.log(response.data);
-
-                if (response.data.status != 2) {
-                    window.location.assign('atividade.html');
-                } else {
-                    alert("Atividade não criada. Motivo: " + response.data.error);
+                let coisas = {
+                    agrupador,
+                    titulo,
+                    descricao,
+                    tempoConclusao,
+                    dataAtividade
                 }
-            });
+
+                console.log(coisas);
+
+                axios.post('https://alumnus-api.herokuapp.com/activity/create', coisas, { headers: { 'Authorization': 'Bearer ' + token } })
+                    .then(function (response) {
+
+                        console.log(response.data);
+
+                        if (response.data.status == 3) {
+                            window.location.assign('login-e-cadastro.html');
+                        }
+
+                        if (response.data.status == 1) {
+                            window.location.assign('atividade.html');
+                        } else {
+                            alert("Atividade não criada. Motivo: " + response.data.error);
+                        }
+                    });
             }
         }
 
-        function logoff(){
+        function logoff() {
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.assign('tela-inicial.html');
         }

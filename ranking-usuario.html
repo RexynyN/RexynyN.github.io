@@ -78,7 +78,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-roxo ml-4 shadow">
                                     <a class="dropdown-item" href="atividade.html">Menu - Atividades</a>
-                                    <a class="dropdown-item" href="programar-atividade.html">Fazer atividade agora</a>
+                                    <a class="dropdown-item" href="programar-atividade.html">Nova atividade</a>
                                     <a class="dropdown-item" href="historico-atividade.html">Histórico</a>
                                 </div>
                             </div>
@@ -251,9 +251,9 @@
                        let htmlComponents = "<td>" + (i+1) + "</td>";
                        htmlComponents += "<td>" + rank[i].nickname + "</td>";
                        htmlComponents += "<td>" + rank[i].pontuacao + "</td>";
-                       let tr = document.createElement("div");
-                       tr.style.padding = "23px";
-                       tr.style.fontSize = "321px";
+                       let tr = document.createElement("tr");
+                    //    tr.style.padding = "23px";
+                    //    tr.style.fontSize = "321px";
                        tr.innerHTML = htmlComponents;
                        table.appendChild(tr);
                         
