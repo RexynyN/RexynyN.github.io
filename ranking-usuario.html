@@ -82,13 +82,7 @@
                                     <a class="dropdown-item" href="historico-atividade.html">Histórico</a>
                                 </div>
                             </div>
-                        <li>
-                            <a href="#">
-                                <span class="icon"><i class="far fa-calendar-alt fa-fw"></i>
-                                </span>
-                                <span class="list">Calendário</span>
-                            </a>
-                        </li>
+                         
                         <li>
                             <a href="cronograma.html">
                                 <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
@@ -252,8 +246,6 @@
                        htmlComponents += "<td>" + rank[i].nickname + "</td>";
                        htmlComponents += "<td>" + rank[i].pontuacao + "</td>";
                        let tr = document.createElement("tr");
-                    //    tr.style.padding = "23px";
-                    //    tr.style.fontSize = "321px";
                        tr.innerHTML = htmlComponents;
                        table.appendChild(tr);
                         

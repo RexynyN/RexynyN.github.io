@@ -81,13 +81,6 @@
                                 </div>
                             </div>
                         <li>
-                            <a href="#">
-                                <span class="icon"><i class="far fa-calendar-alt fa-fw"></i>
-                                </span>
-                                <span class="list">Calendário</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="cronograma.html">
                                 <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
                                 </span>
@@ -256,6 +249,7 @@
                     if (response.data.status == 1) {
                         let atvs = response.data.activities;
 
+                    if(atvs.length > 0){        
                         for (var i = 0; i < atvs.length; i++) {
                             let htmlComponents = "<td><a href='fazendo-atividade.html?activityId="+atvs[i].id+"'>" + atvs[i].titulo + "</a></td>";
                             htmlComponents += "<td>" + atvs[i].descricao + "</td>";
@@ -266,6 +260,15 @@
                             tr.innerHTML = htmlComponents;
                             table.appendChild(tr);
                         }
+                    }else{
+                        let htmlComponents = "<td>" + "Nenhum registro foi encontrado" + "</td>"; 
+                        htmlComponents += "<td>" + "  " + "</td>"; 
+                        htmlComponents += "<td>" + "  " + "</td>"; 
+                        htmlComponents += "<td>" + "  " + "</td>";  
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = htmlComponents;
+                        table.appendChild(tr);
+                    }
 
                     } else if (response.data.status == 2) {
                         alert("Houve um erro ao retornar as atividades.");

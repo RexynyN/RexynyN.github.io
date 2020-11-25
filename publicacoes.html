@@ -82,13 +82,7 @@
                                     <a class="dropdown-item" href="historico-atividade.html">Histórico</a>
                                 </div>
                             </div>
-                        <li>
-                            <a href="#">
-                                <span class="icon"><i class="far fa-calendar-alt fa-fw"></i>
-                                </span>
-                                <span class="list">Calendário</span>
-                            </a>
-                        </li>
+                         
                         <li>
                             <a href="cronograma.html">
                                 <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
@@ -336,6 +330,8 @@
                             let d = new Date(pubs[i].createdAt);
                             htmlComponents += "<td>" + formataData(d) + "</td>";
                             let tr = document.createElement("tr");
+                    //    tr.style.padding = "23px";
+                    //    tr.style.fontSize = "321px";
                             tr.innerHTML = htmlComponents;
                             table.appendChild(tr);
                         }
@@ -347,7 +343,7 @@
         }
 
         function getPubliList() {
-            axios.get('https://alumnus-api.herokuapp.com/post/feed/?limit=1000&page=1', { headers: { 'Authorization': 'Bearer ' + token } }).then(function (response) {
+            axios.get('https://alumnus-api.herokuapp.com/post/feed/?limit=100&page=1', { headers: { 'Authorization': 'Bearer ' + token } }).then(function (response) {
                 console.log(response.data);
 
                 if (response.data.status == 3) {
@@ -358,15 +354,20 @@
                     let pubs = response.data.pubs;
 
                     for (var i = 0; i < pubs.length; i++) {
+                        //variaveis 
                         let nickName = pubs[i].usuario.nickname;
+                        let tituloPubli = pubs[i].titulo;
+                        let conteudo = pubs[i].conteudo;
+                        let diaPubli = new Date (pubs[i].createdAt);
                         
-                        let publicação = nickName+" - " + pubs[i].titulo + "\t" + pubs[i].conteudo + "\n";
-                        var node = document.createElement("LI");
-                        var textnode = document.createTextNode(publicação);
-                        node.appendChild(textnode);
-                        document.getElementById("publi").appendChild(node);
-                    }
+                        //div
+                        var div = document.createElement("div");
+                        div.setAttribute("class", "divPub");
 
+                        div.innerHTML = "<strong>"+nickName+"</strong> - "+tituloPubli+"<br><br><p>"+ conteudo+"</p><span class='time-left'>"+formataData(diaPubli)+"</span><br>";
+
+                        document.getElementById("publi").appendChild(div);
+                    }
                 } else if (response.data.status == 2) {
                     alert("Houve um erro ao retornar as atividades.");
                 }
@@ -388,7 +389,7 @@
         function formataData(n) {
             var mm = n.getMonth() + 1;
             var dd = n.getDate();
-            var hh = n.getHours() + 3;
+            var hh = n.getHours();
             var min = n.getMinutes();
 
             let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');

@@ -81,13 +81,7 @@
                                     <a class="dropdown-item" href="historico-atividade.html">Histórico</a>
                                 </div>
                             </div>
-                        <li>
-                            <a href="#">
-                                <span class="icon"><i class="far fa-calendar-alt fa-fw"></i>
-                                </span>
-                                <span class="list">Calendário</span>
-                            </a>
-                        </li>
+                         
                         <li>
                             <a href="cronograma.html">
                                 <span class="icon"><i class="fas fa-clipboard-list fa-fw"></i>
@@ -151,8 +145,8 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 my-2">
-                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="10"
-                                    placeholder="Escreva suas anotações aqui"></textarea>
+                                <textarea class="form-control" id="anotacao" rows="10"
+                                    placeholder="Escreva suas anotações aqui (Máximo de 255 caracteres)"></textarea>
                             </div>
                         </div>
                         <div class="text-center m-2 p-2">
@@ -443,65 +437,78 @@
         function finalizarAtividade() {
             var hh = JSON.parse(localStorage.getItem("hours"));
             var mm = JSON.parse(localStorage.getItem("minutes"));
-            var anotacao = document.getElementById('').value;
+            var anotacao = document.getElementById('anotacao').value;
 
-            let previsto = new Date(activity.dataAtividade);
-            let hourMin = activity.tempoPrevisto.split(":");
-            previsto.setHours(previsto.getHours() + Number(hourMin[0]));
-            previsto.setMinutes(previsto.getMinutes() + Number(hourMin[1]));
+            if (anotacao.length > 255) {
+                alert("As anotações não podem passar de 255 caracteres!");
+            } else {
 
-            let real = new Date(activity.dataAtividade);
-            real.setHours(real.getHours() + Number(hh));
-            real.setMinutes(real.getMinutes() + Number(mm));
+                let previsto = new Date(activity.dataAtividade);
+                let hourMin = activity.tempoPrevisto.split(":");
+                previsto.setHours(previsto.getHours() + Number(hourMin[0]));
+                previsto.setMinutes(previsto.getMinutes() + Number(hourMin[1]));
 
-            var diffMs = (previsto - real); 
-            var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-            var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-            
-            
-            let campos = {
-                id: activity.id,
-                tempoCumprido: diffHrs + ":" + diffMins
-                anotacao
+                let real = new Date(activity.dataAtividade);
+                real.setHours(real.getHours() + Number(hh));
+                real.setMinutes(real.getMinutes() + Number(mm));
+
+                var diffMs = (previsto - real);
+                var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+                var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+
+
+                let campos = {
+                    id: activity.id,
+                    tempoCumprido: diffHrs + ":" + diffMins,
+                    anotacao,
+                }
+
+                axios.post('https://alumnus-api.herokuapp.com/activity/close', campos, { headers: { 'Authorization': 'Bearer ' + token } })
+                    .then(function (response) {
+
+                        console.log(response.data);
+
+                        if (response.data.status == 1) {
+                            localStorage.removeItem('list_todos');
+                            localStorage.removeItem('ids');
+                            localStorage.removeItem('hours');
+                            localStorage.removeItem('minutes');
+                            window.location.assign('atividade.html');
+                        } else {
+                            alert("Não foi possível cancelar a atividade. Motivo: " + response.data.error);
+                        }
+                    });
             }
-            
-            axios.post('https://alumnus-api.herokuapp.com/activity/close', campos, { headers: { 'Authorization': 'Bearer ' + token } })
-                .then(function (response) {
-
-                    console.log(response.data);
-
-                    if (response.data.status == 1) {
-                        localStorage.removeItem('list_todos');
-                        localStorage.removeItem('ids');
-                        localStorage.removeItem('hours');
-                        localStorage.removeItem('minutes');
-                        window.location.assign('atividade.html');
-                    } else {
-                        alert("Não foi possível cancelar a atividade. Motivo: " + response.data.error);
-                    }
-                });
         }
 
         function cancelarAtividade() {
-            let campos = {
-                id: activity.id,
+            var anotacao = document.getElementById('anotacao').value;
+
+            if (anotacao.length > 255) {
+                alert("As anotações não podem passar de 255 caracteres!");
+            } else {
+
+                let campos = {
+                    id: activity.id,
+                    anotacao
+                }
+
+                axios.post('https://alumnus-api.herokuapp.com/activity/cancel', campos, { headers: { 'Authorization': 'Bearer ' + token } })
+                    .then(function (response) {
+
+                        console.log(response.data);
+
+                        if (response.data.status != 2) {
+                            localStorage.removeItem('list_todos');
+                            localStorage.removeItem('ids');
+                            localStorage.removeItem('hours');
+                            localStorage.removeItem('minutes');
+                            window.location.assign('atividade.html');
+                        } else {
+                            alert("Não foi possível cancelar a atividade. Motivo: " + response.data.error);
+                        }
+                    });
             }
-
-            axios.post('https://alumnus-api.herokuapp.com/activity/cancel', campos, { headers: { 'Authorization': 'Bearer ' + token } })
-                .then(function (response) {
-
-                    console.log(response.data);
-
-                    if (response.data.status != 2) {
-                        localStorage.removeItem('list_todos');
-                        localStorage.removeItem('ids');
-                        localStorage.removeItem('hours');
-                        localStorage.removeItem('minutes');
-                        window.location.assign('atividade.html');
-                    } else {
-                        alert("Não foi possível cancelar a atividade. Motivo: " + response.data.error);
-                    }
-                });
         }
 
 
