@@ -20,7 +20,6 @@
 
 <body>
     <div class="wrapper active">
-
         <div class="top_navbar">
             <div class="logo">
                 <a href="tela-principal.html">ALUMNUS</a>
@@ -61,14 +60,14 @@
                 <div class="inner__sidebar_menu">
                     <ul>
                         <li>
-                            <a href="tela-principal.html" class="active">
+                            <a href="tela-principal.html">
                                 <span class="icon"><i class="fas fa-home fa-fw"></i></span>
                                 <span class="list">Home</span>
                             </a>
                         </li>
                         <li>
                             <div class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     <span class="icon">
                                         <i class="fas fa-pencil-alt fa-fw"></i>
@@ -139,39 +138,44 @@
                             <div class="form-group col-md-6">
                                 <label for="example-time-input">Data da atividade:</label>
                                 <input class="form-control" type="date" placeholder="13:45:00" id="data-atividade"
-                                   readonly required>
+                                    readonly required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="example-time-input">Horário da atividade:</label>
                                 <input class="form-control" type="time" placeholder="13:45:00" id="data-tempo-atividade"
-                                readonly required>
+                                    readonly required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="example-time-input">Tempo de duração da atividade:</label>
-                                <input class="form-control" type="time" placeholder="13:45:00" id="tempo-atividade"
-                                readonly  required>
+                                <input class="form-control" type="text" placeholder="13:45:00" id="tempo-atividade"
+                                    readonly required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="example-time-input">Tempo utilizado para terminar atividade:</label>
-                                <input class="form-control" type="time" placeholder="13:45:00" id="tempo-cumprido"
-                                readonly  required>
+                                <input class="form-control" type="text" placeholder="13:45:00" id="tempo-cumprido"
+                                    readonly required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="example-time-input">Pontos Ganhos:</label>
-                                <input class="form-control" type="text" id="pontos"
-                                readonly  required>
+                                <input class="form-control" type="text" id="pontos" readonly required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Descrição da atividade:</label>
+                            <label for="descricao-atividade">Descrição da atividade:</label>
                             <textarea class="form-control" id="descricao-atividade" rows="2" readonly></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Anotações:</label>
+                            <label for="anotacao">Anotações:</label>
                             <textarea class="form-control" id="anotacao" rows="2" readonly></textarea>
                         </div>
+
+                        <div class="form-group">
+                            <label>Metas:</label>
+                            <div class="list-group" id="list">
+                            </div>
+                        </div>
                         <div class="text-center">
-                            <a href="atividade.html" class="btn btn-primary btn-lg">Voltar</a>
+                            <a href="historico-atividade.html" class="btn btn-primary btn-lg">Voltar</a>
                         </div>
                     </div>
                 </div>
@@ -287,18 +291,74 @@
                         document.getElementById("agrupador-atividade").value = dados.agrupador;
                         document.getElementById("titulo-atividade").value = dados.titulo;
                         document.getElementById("descricao-atividade").value = dados.descricao;
-                        document.getElementById("tempo-atividade").value = dados.tempoPrevisto;
+
+                        var editedTime = dados.tempoPrevisto.split(':');
+                        var string = editedTime[0] + "h " + editedTime[1] + "min";
+                        document.getElementById("tempo-atividade").value = string;
 
                         var data = dados.dataAtividade.split("T")[0];
                         var time = dados.dataAtividade.split("T")[1];
-
                         time = time.split(":00.000Z")[0];
+
                         document.getElementById("data-atividade").value = data;
                         document.getElementById("data-tempo-atividade").value = time;
-                        document.getElementById("tempo-cumprido").value = dados.tempoCumprido;
+
+                        editedTime = dados.tempoCumprido.split(':');
+                        string = editedTime[0] + "h " + editedTime[1] + "min";
+                        document.getElementById("tempo-cumprido").value = string;
+
                         document.getElementById("anotacao").value = dados.anotacao;
                         document.getElementById("pontos").value = dados.pontos;
 
+                        setMetas(dados.id);
+                    } else {
+                        alert("Houve um erro ao retornar as atividades.");
+                    }
+
+                });
+        }
+
+        function setMetas(id) {
+
+            axios.get('https://alumnus-api.herokuapp.com/meta/list/' + id, { headers: { 'Authorization': 'Bearer ' + token } })
+                .then(function (response) {
+                    console.log(response.data);
+
+                    if (response.data.status == 3) {
+                        window.location.assign('login-e-cadastro.html');
+                    }
+
+                    if (response.data.status !== 2) {
+                        var dados = response.data.metas;
+
+                        let list = document.getElementById('list');
+                        if (dados.length > 0) {
+                            for (var i = 0; i < dados.length; i++) {
+                                let htmlComponents = "";
+''
+                                if (dados[i].situacaoMeta == 2) {
+                                    htmlComponents = "<div class='list-group-item list-group-item-action flex-column align-items-start list-group-item-success'>";
+                                    htmlComponents += "<div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>" + dados[i].descricaoMeta + "</h5></div>";
+                                    htmlComponents += "<p class='mb-1'>Esta meta foi alcançada, parabéns!</p></div>";
+                                } else {
+                                    htmlComponents = "<div class='list-group-item list-group-item-action flex-column align-items-start list-group-item-danger'>";
+                                    htmlComponents += "<div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>" + dados[i].descricaoMeta + "</h5></div>";
+                                    htmlComponents += "<p class='mb-1'>Esta meta não foi alcançada, mais sorte da próxima vez...</p></div>";
+                                }
+                                let div = document.createElement("div");
+                                div.innerHTML = htmlComponents;
+                                list.appendChild(div);
+                            }
+
+                        } else {
+                            let htmlComponents = "<div class='list-group-item list-group-item-action flex-column align-items-start list-group-item-info'>";
+                            htmlComponents += "<div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>Parece que você não tem metas nesta atividade...</h5></div>";
+                            htmlComponents += "<p class='mb-1'>Da próxima vez crie uma meta, todo mundo adora um desafio! </p></div>";
+
+                            let div = document.createElement("div");
+                            div.innerHTML = htmlComponents;
+                            list.appendChild(div);
+                        }
 
                     } else {
                         alert("Houve um erro ao retornar as atividades.");
@@ -307,45 +367,6 @@
                 });
         }
 
-
-        function enviarAtividade() {
-            var agrupador = document.getElementById("agrupador-atividade").value;
-            var titulo = document.getElementById("titulo-atividade").value;
-            var descricao = document.getElementById("descricao-atividade").value;
-            var tempoConclusao = document.getElementById("tempo-atividade").value;
-            var data = document.getElementById("data-atividade").value;
-            var time = document.getElementById("data-tempo-atividade").value;
-
-            var dataAtividade = data + "T" + time + "Z";
-
-            if (agrupador.length > 255 || descricao.length > 255) {
-                alert("O agrupador e a descrição não podem ultrapassar 255 caracteres");
-            } else {
-
-                let coisas = {
-                    id: activityId,
-                    agrupador,
-                    titulo,
-                    descricao,
-                    tempoConclusao,
-                    dataAtividade
-                }
-
-                console.log(coisas);
-
-                axios.post('https://alumnus-api.herokuapp.com/activity/edit/', coisas, { headers: { 'Authorization': 'Bearer ' + token, 'Access-Control-Allow-Origin': '*' } })
-                    .then(function (response) {
-
-                        console.log(response.data);
-
-                        if (response.data.status != 2) {
-                            window.location.assign('atividade.html');
-                        } else {
-                            alert("Atividade não editada. Motivo: " + response.data.error);
-                        }
-                    });
-            }
-        }
 
         function logoff() {
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

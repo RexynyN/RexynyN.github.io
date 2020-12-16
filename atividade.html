@@ -61,14 +61,14 @@
                 <div class="inner__sidebar_menu">
                     <ul>
                         <li>
-                            <a href="tela-principal.html" class="active">
+                            <a href="tela-principal.html">
                                 <span class="icon"><i class="fas fa-home fa-fw"></i></span>
                                 <span class="list">Home</span>
                             </a>
                         </li>
                         <li>
                             <div class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     <span class="icon">
                                         <i class="fas fa-pencil-alt fa-fw"></i>
@@ -145,16 +145,6 @@
                             </tr>
                         </thead>
                         <tbody id="table-content">
-                            <!-- <tr>
-                                <td>Estudar SIN</td>
-                                <td>1h30</td>
-                                <td>08/10/2020</td>
-                                <td>20</td>
-                                <td class="text-center">
-                                    <a href="#" title="Editar Atividade"><i class="fas fa-edit fa-fw fa-lg"></i></a>
-                                    <a href="#" title="Ver somente anotações"><i class="fas fa-trash fa-fw fa-lg"></i></a>
-                                </td>
-                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -162,165 +152,181 @@
         </div>
     </div>
 
-
-    <!-- Modal Notificações-->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header text-white">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Notificações</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitleConfirm">Confirmar Mudanças</h5>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group">
-                        <li class="list-group-item text-justify">Você está entre os 100 melhores da semana! <button
-                                class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
-                        <li class="list-group-item text-justify">Sua próxima atividade começa em 5 minutos! <button
-                                class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
-                        <li class="list-group-item text-justify">Você cadastrou uma nova atividade em 02/10/2020.<button
-                                class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
-                    </ul>
+                    <p>Deseja começar essa atividade? Esse passo não pode ser desfeito</p>
                 </div>
-                <hr>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                    <button type="button" class="btn btn-primary" onclick="comecarAtividade();">Começar</button>
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <!-- Dropdown menu-->
-    <script>
-        $('.dropdown-menu').on({
-            "click": function (e) {
-                e.stopPropagation();
-            }
-        });
-    </script>
-    <!-- Menu hamburguer-->
-    <script>
+        <!-- Modal Notificações-->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-white">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Notificações</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <li class="list-group-item text-justify">Você está entre os 100 melhores da semana! <button
+                                    class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
+                            <li class="list-group-item text-justify">Sua próxima atividade começa em 5 minutos! <button
+                                    class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
+                            <li class="list-group-item text-justify">Você cadastrou uma nova atividade em
+                                02/10/2020.<button class="btn btn-danger fechar mt-2 float-right">Fechar</button></li>
+                        </ul>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
 
-        $(".hamburger").click(function () {
-            $(".wrapper").toggleClass("active")
-        })
-    </script>
-    <!-- Importação da biblioteca de icones FontAwesome-->
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" crossorigin="anonymous"></script>
 
-    <!-- Tradução da página-->
-    <script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: 'pt', includedLanguages: 'en,pt' }, 'google_translate_element');
-        }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script>
-        var close = document.getElementsByClassName("fechar");
-        var token = getCookie("token");
-
-        function getCookie(cname) {
-            var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);    
-            var ca = decodedCookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
+        <!-- Bootstrap: Optional JavaScript -> jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+        <!-- Dropdown menu-->
+        <script>
+            $('.dropdown-menu').on({
+                "click": function (e) {
+                    e.stopPropagation();
                 }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
+            });
+        </script>
+        <!-- Menu hamburguer-->
+        <script>
+
+            $(".hamburger").click(function () {
+                $(".wrapper").toggleClass("active")
+            })
+        </script>
+        <!-- Importação da biblioteca de icones FontAwesome-->
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" crossorigin="anonymous"></script>
+
+        <!-- Tradução da página-->
+        <script>
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({ pageLanguage: 'pt', includedLanguages: 'en,pt' }, 'google_translate_element');
             }
-            return "";
-        }
+        </script>
+        <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <script>
+            var close = document.getElementsByClassName("fechar");
+            var token = getCookie("token");
 
-        var i;
-        for (i = 0; i < close.length; i++) {
-            close[i].onclick = function () {
-                var div = this.parentElement;
-                div.style.display = "none";
-            }
-        }
-
-
-        window.onload = () => {
-
-            let table = document.getElementById("table-content");
-
-            axios.get('https://alumnus-api.herokuapp.com/activity/list?limit=1000&page=1', { headers: { 'Authorization': 'Bearer ' + token } })
-                .then(function (response) {
-                    console.log(token); 
-
-                    if(response.data.status == 3){
-                        window.location.assign('login-e-cadastro.html');
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
                     }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
 
-                    if (response.data.status == 1) {
-                        let atvs = response.data.activities;
+            var i;
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
 
-                        if(atvs.length >0){
-                        for (var i = 0; i < atvs.length; i++) {
-                            let htmlComponents = "<td><a href='fazendo-atividade.html?activityId="+atvs[i].id+"'>" + atvs[i].titulo + "</a></td>";
-                            htmlComponents += "<td>" + atvs[i].descricao + "</td>";
-                            let d = new Date(atvs[i].dataAtividade);
-                            htmlComponents += "<td>" + formataData(d) + "</td>";
-                            htmlComponents += "<td>" + atvs[i].agrupador + "</td>";
-                            htmlComponents += "<td class='text-center'><a href='editar-atividade.html?activityId="+atvs[i].id+"' title='Editar Atividade'><i class='fas fa-edit fa-fw fa-lg'></i></a>"+
-                            "<a href='apagar-atividade.html?activityId="+atvs[i].id+"' title='Apagar atividade'><i class='fas fa-trash fa-fw fa-lg'></i></a></td>";
-                            let tr = document.createElement("tr");
-                            tr.innerHTML = htmlComponents;
-                            table.appendChild(tr);
+            window.onload = () => {
+
+                let table = document.getElementById("table-content");
+
+                axios.get('https://alumnus-api.herokuapp.com/activity/list?limit=1000&page=1', { headers: { 'Authorization': 'Bearer ' + token } })
+                    .then(function (response) {
+                        console.log(token);
+
+                        if (response.data.status == 3) {
+                            window.location.assign('login-e-cadastro.html');
                         }
-                        
-                    }else{
-                        let htmlComponents = "<td>" + "Nenhum registro foi encontrado" + "</td>"; 
-                        htmlComponents += "<td>" + "  " + "</td>"; 
-                        htmlComponents += "<td>" + "  " + "</td>"; 
-                        htmlComponents += "<td>" + "  " + "</td>";  
-                        let tr = document.createElement("tr");
-                        tr.innerHTML = htmlComponents;
-                        table.appendChild(tr);
-                    }
-                    } else if (response.data.status == 2) {
-                        alert("Houve um erro ao retornar as atividades.");
-                    }
-                });
-        }
+
+                        if (response.data.status == 1) {
+                            let atvs = response.data.activities;
+
+                            if (atvs.length > 0) {
+                                for (var i = 0; i < atvs.length; i++) {
+                                    let htmlComponents = "<td><a href='editar-atividade.html?activityId=" + atvs[i].id + "'>" + atvs[i].titulo + "</a></td>";
+                                    htmlComponents += "<td>" + atvs[i].descricao + "</td>";
+                                    let d = new Date(atvs[i].dataAtividade);
+                                    htmlComponents += "<td>" + formataData(d) + "</td>";
+                                    htmlComponents += "<td>" + atvs[i].agrupador + "</td>";
+                                    htmlComponents += "<td class='text-center'><a href='editar-atividade.html?activityId=" + atvs[i].id + "' title='Editar Atividade'><i class='fas fa-edit fa-fw fa-lg'></i></a>" +
+                                        "<a href='apagar-atividade.html?activityId=" + atvs[i].id + "' title='Apagar atividade'><i class='fas fa-trash fa-fw fa-lg'></i></a></td>";
+                                    let tr = document.createElement("tr");
+                                    tr.innerHTML = htmlComponents;
+                                    table.appendChild(tr);
+                                }
+
+                            } else {
+                                let htmlComponents = "<td>" + "Nenhum registro foi encontrado" + "</td>";
+                                htmlComponents += "<td>" + "  " + "</td>";
+                                htmlComponents += "<td>" + "  " + "</td>";
+                                htmlComponents += "<td>" + "  " + "</td>";
+                                let tr = document.createElement("tr");
+                                tr.innerHTML = htmlComponents;
+                                table.appendChild(tr);
+                            }
+                        } else if (response.data.status == 2) {
+                            alert("Houve um erro ao retornar as atividades.");
+                        }
+                    });
+            }
 
 
-        function formataData(n) {
-            var mm = n.getMonth() + 1;
-            var dd = n.getDate();
-            var hh = n.getHours() + 3;
-            var min = n.getMinutes();
+            function formataData(n) {
+                var mm = n.getMonth() + 1;
+                var dd = n.getDate();
+                var hh = n.getHours() + 3;
+                var min = n.getMinutes();
 
-            let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
+                let data = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, n.getFullYear()].join('/');
 
-            let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
+                let time = [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min].join(':');
 
-            return data + " " + time;
-        };
+                return data + " " + time;
+            };
 
-        function logoff(){
-            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.assign('tela-inicial.html');
-        }
+            function logoff() {
+                document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                window.location.assign('tela-inicial.html');
+            }
 
-    </script>
+        </script>
 </body>
 
-</html> 
+</html>
 
 </body>
 
