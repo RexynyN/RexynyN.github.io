@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Não Muito Interessante</title>
-    <link>http://rexynyn.github.io/</link>
-    <description>Recent content on Não Muito Interessante</description>
+    <title>Literaturas on Não Muito Interessante</title>
+    <link>http://rexynyn.github.io/literatura/</link>
+    <description>Recent content in Literaturas on Não Muito Interessante</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>pt-br</language>
-    <lastBuildDate>Fri, 19 Aug 2022 16:15:32 -0300</lastBuildDate><atom:link href="http://rexynyn.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Critica</title>
-      <link>http://rexynyn.github.io/posts/critica/</link>
-      <pubDate>Fri, 19 Aug 2022 16:15:32 -0300</pubDate>
-      
-      <guid>http://rexynyn.github.io/posts/critica/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Fri, 19 Aug 2022 16:15:32 -0300</lastBuildDate><atom:link href="http://rexynyn.github.io/literatura/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Parte 1 — Do contrário, ao avesso, e destruindo minha mente</title>
       <link>http://rexynyn.github.io/literatura/projeto-b/conto-3-parte-1/</link>

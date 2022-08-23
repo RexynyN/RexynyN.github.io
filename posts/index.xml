@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Não Muito Interessante</title>
+    <link>http://rexynyn.github.io/posts/</link>
+    <description>Recent content in Posts on Não Muito Interessante</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Fri, 19 Aug 2022 16:15:32 -0300</lastBuildDate><atom:link href="http://rexynyn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Critica</title>
+      <link>http://rexynyn.github.io/posts/critica/</link>
+      <pubDate>Fri, 19 Aug 2022 16:15:32 -0300</pubDate>
+      
+      <guid>http://rexynyn.github.io/posts/critica/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
